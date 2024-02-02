@@ -28,7 +28,7 @@ function Hero() {
                                 <div className="card-body">
                                     <div className="d-flex justify-content-center">
                                         <div className="card-icon">
-                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                            <i className="fa-solid fa-magnifying-glass"></i>
                                         </div>
                                     </div>
                                     <h5 className="card-title">Find Your Ride</h5>
@@ -44,7 +44,7 @@ function Hero() {
                                 <div className="card-body">
                                     <div className="d-flex justify-content-center">
                                         <div className="card-icon">
-                                            <i class="fa-solid fa-handshake"></i>
+                                            <i className="fa-solid fa-handshake"></i>
                                         </div>
                                     </div>
                                     <h5 className="card-title">Select & Book</h5>
@@ -60,7 +60,7 @@ function Hero() {
                                 <div className="card-body">
                                     <div className="d-flex justify-content-center">
                                         <div className="card-icon">
-                                            <i class="fa-solid fa-car"></i>
+                                            <i className="fa-solid fa-car"></i>
                                         </div>
                                     </div>
                                     <h5 className="card-title">Travel Togather</h5>

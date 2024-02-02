@@ -13,7 +13,7 @@ function AboutSec() {
                                 <div>
                                     <div className="d-flex justify-content-center">
                                         <div className="abt-icon">
-                                            <i class="fa-solid fa-users"></i>
+                                            <i className="fa-solid fa-users"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -29,7 +29,7 @@ function AboutSec() {
                                 <div>
                                     <div className="d-flex justify-content-center">
                                         <div className="abt-icon">
-                                            <i class="fa-solid fa-expand"></i>
+                                            <i className="fa-solid fa-expand"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@ function AboutSec() {
                                 <div>
                                     <div className="d-flex justify-content-center">
                                         <div className="abt-icon">
-                                            <i class="fa-solid fa-taxi"></i>
+                                            <i className="fa-solid fa-taxi"></i>
                                         </div>
                                     </div>
                                 </div>

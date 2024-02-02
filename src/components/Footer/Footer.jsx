@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Footer() {
     return (
@@ -14,24 +15,24 @@ function Footer() {
                     {/* Left */}
                     {/* Right */}
                     <div>
-                        <a href="/" className="me-4 text-reset">
+                        <Link to="/" className="me-4 text-reset">
                             <i className="fab fa-facebook-f" />
-                        </a>
-                        <a href="/" className="me-4 text-reset">
+                        </Link>
+                        <Link to="/" className="me-4 text-reset">
                             <i className="fab fa-twitter" />
-                        </a>
-                        <a href="/" className="me-4 text-reset">
+                        </Link>
+                        <Link to="/" className="me-4 text-reset">
                             <i className="fab fa-google" />
-                        </a>
-                        <a href="/" className="me-4 text-reset">
+                        </Link>
+                        <Link to="/" className="me-4 text-reset">
                             <i className="fab fa-instagram" />
-                        </a>
-                        <a href="/" className="me-4 text-reset">
+                        </Link>
+                        <Link to="/" className="me-4 text-reset">
                             <i className="fab fa-linkedin" />
-                        </a>
-                        <a href="/" className="me-4 text-reset">
+                        </Link>
+                        <Link to="/" className="me-4 text-reset">
                             <i className="fab fa-github" />
-                        </a>
+                        </Link>
                     </div>
                     {/* Right */}
                 </section>
@@ -59,47 +60,34 @@ function Footer() {
                                 {/* Links */}
                                 <h6 className="text-uppercase fw-bold mb-4">Menu</h6>
                                 <p>
-                                    <a href="/" className="text-reset">
+                                    <Link to="/" className="text-reset">
                                         Home
-                                    </a>
+                                    </Link>
                                 </p>
                                 <p>
-                                    <a href="/" className="text-reset">
+                                    <Link to="/about" className="text-reset">
                                         About
-                                    </a>
+                                    </Link>
                                 </p>
                                 <p>
-                                    <a href="/" className="text-reset">
-                                        Services
-                                    </a>
-                                </p>
-                            </div>
-                            {/* Grid column */}
-                            {/* Grid column */}
-                            <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                                {/* Links */}
-                                <h6 className="text-uppercase fw-bold mb-4">Useful links</h6>
-                                <p>
-                                    <a href="/" className="text-reset">
-                                        Contact
-                                    </a>
+                                    <Link to="/contact" className="text-reset">
+                                        Contact Us
+                                    </Link>
                                 </p>
                                 <p>
-                                    <a href="/" className="text-reset">
-                                        Sign Up
-                                    </a>
-                                </p>
-                                <p>
-                                    <a href="/" className="text-reset">
+                                    <Link to="/signin" className="text-reset">
                                         Sign In
-                                    </a>
+                                    </Link>
                                 </p>
                                 <p>
-                                    <a href="/" className="text-reset">
-                                        Help
-                                    </a>
+                                    <Link to="/signup" className="text-reset">
+                                        Sign Up
+                                    </Link>
                                 </p>
                             </div>
+                            {/* Grid column */}
+                            {/* Grid column */}
+                            
                             {/* Grid column */}
                             {/* Grid column */}
                             <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
@@ -129,9 +117,9 @@ function Footer() {
                 <div className='bottom-footer text-center py-4'
                 >
                     © 2024 Copyright: &nbsp;
-                    <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
+                    <Link className="text-reset fw-bold" to="https://mdbootstrap.com/">
                         E-Carpool
-                    </a>
+                    </Link>
                 </div>
                 {/* Copyright */}
             </footer>

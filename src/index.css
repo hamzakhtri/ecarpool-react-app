@@ -3,42 +3,54 @@
 
 
 * {
-    font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
+}
+
+a{
+  text-decoration: none;
 }
 
 :root {
-    --theme-color: #004AAD;
+  --theme-color: #004AAD;
 }
 
 
 /* ******************* Top Bar Styling Start *************** */
 
 .top-navbar {
-    background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 47, 121, 1) 39%, rgba(0, 74, 173, 1) 94%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 47, 121, 1) 39%, rgba(0, 74, 173, 1) 94%);
 }
 
 .menu-item {
-    color: white;
-    font-size: 17px;
-    font-weight: 500;
-    transition: 0.4s;
-    padding: 10px 18px !important;
+  color: white;
+  font-size: 17px;
+  font-weight: 500;
+  transition: 0.4s;
+  padding: 10px 18px !important;
+  text-decoration: none;
 }
 
 .menu-item:hover {
-    color: white;
-    background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
-    border-radius: 9px;
-    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+  color: white;
+  background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
+  border-radius: 9px;
+  box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+}
+
+.menu-item.active {
+  color: white;
+  background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
+  border-radius: 9px;
+  box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
 }
 
 div#offcanvasNavbar-expand-lg {
-    background-color: var(--theme-color);
+  background-color: var(--theme-color);
 }
 
 .offcanvas-header {
-    color: white;
+  color: white;
 }
 
 
@@ -46,95 +58,95 @@ div#offcanvasNavbar-expand-lg {
 
 
 section.hero-section {
-    padding: 12% 0px 15% 0px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
+  padding: 12% 0px 15% 0px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 .hero-section .container .row h1 {
-    font-size: 60px !important;
-    font-weight: 500;
+  font-size: 60px !important;
+  font-weight: 500;
 }
 
 .hero-section .container .row p {
-    font-size: 17px;
-    font-weight: 300;
-    line-height: 29px;
-    margin-top: 14px;
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 29px;
+  margin-top: 14px;
 }
 
 button.theme-btn {
-    background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
-    margin: 10px;
-    border-radius: 0;
-    padding: 8px 23px;
-    color: white;
-    font-size: 18px;
-    box-shadow: none;
-    border: none;
-    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+  background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
+  margin: 10px;
+  border-radius: 0;
+  padding: 8px 23px;
+  color: white;
+  font-size: 18px;
+  box-shadow: none;
+  border: none;
+  box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
 }
 
 
 button.theme-btn:hover {
-    background: linear-gradient(#004AAD, #0057c9 50%, #0252bb 0, #015fda);
-    margin: 10px;
-    border-radius: 0;
-    padding: 8px 23px;
-    color: white;
-    font-size: 18px;
-    box-shadow: none;
-    border: none;
-    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+  background: linear-gradient(#004AAD, #0057c9 50%, #0252bb 0, #015fda);
+  margin: 10px;
+  border-radius: 0;
+  padding: 8px 23px;
+  color: white;
+  font-size: 18px;
+  box-shadow: none;
+  border: none;
+  box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
 }
 
 /* hero info sec stylng  */
 
 section.hero-info {
-    margin-top: -120px;
-    margin-bottom: 120px;
+  margin-top: -120px;
+  margin-bottom: 120px;
 }
 
 section.hero-info .card {
-    background-color: var(--theme-color);
-    color: white;
-    border-radius: 0;
-    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
-    transition: 0.5s;
+  background-color: var(--theme-color);
+  color: white;
+  border-radius: 0;
+  box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+  transition: 0.5s;
 
 }
 
 section.hero-info .card:hover {
-    background: white;
-    color: var(--theme-color);
+  background: white;
+  color: var(--theme-color);
 }
 
 section.hero-info .card:hover .card-icon i {
-    color: white;
+  color: white;
 }
 
 section.hero-info .card:hover .card-icon {
-    background-color: var(--theme-color);
+  background-color: var(--theme-color);
 }
 
 .card-icon i {
-    font-size: 45px;
-    color: #004aad;
-    transition: 0.5s;
+  font-size: 45px;
+  color: #004aad;
+  transition: 0.5s;
 }
 
 .card-icon {
-    background: white;
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 18px 0px;
+  background: white;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 18px 0px;
 }
 
 
@@ -142,61 +154,61 @@ section.hero-info .card:hover .card-icon {
 
 
 .about-sec .container>.row {
-    margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .abt-icon i {
-    font-size: 37px;
-    color: #fff;
-    transition: 0.5s;
+  font-size: 37px;
+  color: #fff;
+  transition: 0.5s;
 }
 
 .abt-icon {
-    background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 25px;
+  background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 25px;
 
 }
 
 section.about-sec .abt-txt {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 section.about-sec .abt-txt p {
-    color: #484848;
+  color: #484848;
 }
 
 .about-sec .about-content h2 {
-    font-size: 38px;
-    font-weight: 600;
-    margin-bottom: 60px;
-    position: relative;
+  font-size: 38px;
+  font-weight: 600;
+  margin-bottom: 60px;
+  position: relative;
 }
 
 .about-sec .about-content h2::after {
-    content: "";
-    width: 160px;
-    height: 4px;
-    background: #004aad;
-    left: 0;
-    position: absolute;
-    bottom: -13px;
-    border-radius: 9px;
+  content: "";
+  width: 160px;
+  height: 4px;
+  background: #004aad;
+  left: 0;
+  position: absolute;
+  bottom: -13px;
+  border-radius: 9px;
 }
 
 /* ****************** Map Sec Styling Start *******************  */
 
 section.map-sec {
-    padding: 50px 0px !important;
-    background: #040833;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  padding: 50px 0px !important;
+  background: #040833;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
 }
 
@@ -204,111 +216,111 @@ section.map-sec {
 
 
 .testimonials-clean {
-    color:#313437;
-    background-color:#fff;
-  }
-  
-  .testimonials-clean p {
-    color:#7d8285;
-  }
-  
+  color: #313437;
+  background-color: #fff;
+}
+
+.testimonials-clean p {
+  color: #7d8285;
+}
+
+.testimonials-clean h2 {
+  font-weight: bold;
+  margin-bottom: 40px;
+  padding-top: 40px;
+  color: inherit;
+}
+
+@media (max-width:767px) {
   .testimonials-clean h2 {
-    font-weight:bold;
-    margin-bottom:40px;
-    padding-top:40px;
-    color:inherit;
+    margin-bottom: 25px;
+    padding-top: 25px;
+    font-size: 24px;
   }
-  
-  @media (max-width:767px) {
-    .testimonials-clean h2 {
-      margin-bottom:25px;
-      padding-top:25px;
-      font-size:24px;
-    }
-  }
-  
-  
-  .testimonials-clean .intro p {
-    margin-bottom:0;
-  }
-  
-  .testimonials-clean .people {
-    padding-bottom: 50px;
-  }
-  
+}
+
+
+.testimonials-clean .intro p {
+  margin-bottom: 0;
+}
+
+.testimonials-clean .people {
+  padding-bottom: 50px;
+}
+
+.testimonials-clean .item {
+  margin-bottom: 32px;
+}
+
+@media (min-width:768px) {
   .testimonials-clean .item {
-    margin-bottom:32px;
+    height: 220px;
   }
-  
-  @media (min-width:768px) {
-    .testimonials-clean .item {
-      height:220px;
-    }
-  }
-  
-  .testimonials-clean .item .box {
-    padding:30px;
-    background-color:var(--theme-color);
-    position:relative;
-  }
-  
-  .testimonials-clean .item .box:after {
-    content:'';
-    position:absolute;
-    left:30px;
-    bottom:-24px;
-    width:0;
-    height:0;
-    border:15px solid transparent;
-    border-width:12px 15px;
-    border-top-color:var(--theme-color);
-  }
-  
-  .testimonials-clean .item .author {
-    margin-top:28px;
-    padding-left:25px;
-  }
-  
-  .testimonials-clean .item .name {
-    font-weight:bold;
-    margin-bottom:2px;
-    color:inherit;
-  }
-  
-  .testimonials-clean .item .title {
-    font-size:13px;
-    color:#9da9ae;
-  }
-  
-  .testimonials-clean .item .description {
-    font-size:15px;
-    margin-bottom:0;
-    color: white;
-  }
-  
-  .testimonials-clean .item img {
-    max-width:40px;
-    float:left;
-    margin-right:12px;
-    margin-top:-5px;
-  }
-  
-  .testimonials-clean h2 {
-    font-size: 38px;
-    font-weight: 600;
-    margin-bottom: 60px;
-    position: relative;
+}
+
+.testimonials-clean .item .box {
+  padding: 30px;
+  background-color: var(--theme-color);
+  position: relative;
+}
+
+.testimonials-clean .item .box:after {
+  content: '';
+  position: absolute;
+  left: 30px;
+  bottom: -24px;
+  width: 0;
+  height: 0;
+  border: 15px solid transparent;
+  border-width: 12px 15px;
+  border-top-color: var(--theme-color);
+}
+
+.testimonials-clean .item .author {
+  margin-top: 28px;
+  padding-left: 25px;
+}
+
+.testimonials-clean .item .name {
+  font-weight: bold;
+  margin-bottom: 2px;
+  color: inherit;
+}
+
+.testimonials-clean .item .title {
+  font-size: 13px;
+  color: #9da9ae;
+}
+
+.testimonials-clean .item .description {
+  font-size: 15px;
+  margin-bottom: 0;
+  color: white;
+}
+
+.testimonials-clean .item img {
+  max-width: 40px;
+  float: left;
+  margin-right: 12px;
+  margin-top: -5px;
+}
+
+.testimonials-clean h2 {
+  font-size: 38px;
+  font-weight: 600;
+  margin-bottom: 60px;
+  position: relative;
 }
 
 .testimonials-clean h2::after {
-    content: "";
-    width: 160px;
-    height: 4px;
-    background: #004aad;
-    left: 0;
-    position: absolute;
-    bottom: -13px;
-    border-radius: 9px;
+  content: "";
+  width: 160px;
+  height: 4px;
+  background: #004aad;
+  left: 0;
+  position: absolute;
+  bottom: -13px;
+  border-radius: 9px;
 }
 
 
@@ -327,7 +339,7 @@ section.map-sec {
   font-size: 18px;
 }
 
-.contact-sec .form-sec .form-control:focus{
+.contact-sec .form-sec .form-control:focus {
   box-shadow: none;
 }
 
@@ -349,18 +361,70 @@ section.map-sec {
   border-radius: 9px;
 }
 
+/* ******************** About Page Styling ***********************  */
 
- /* *************** Footer Styling *******************  */
+.inner-hero {
+  padding: 160px 0px 80px 0px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.inner-hero .container .row h1 {
+  font-size: 60px !important;
+  font-weight: 500;
+}
+
+.about-content {
+  padding: 80px 0 30px 0;
+}
+.about-content p{
+  font-size: 17px;
+  line-height: 30px;
+}
 
 
- .footer-sec {
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 47, 121, 1) 39%, rgba(0, 74, 173, 1) 94%);
+
+
+
+
+/* ******************** Sign In & Sign Up Page Styling *************************  */
+
+
+.login {
+  min-height: 100vh;
+  background-color: #082A71;
+}
+
+.bg-image {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/auth-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.login-heading {
+  font-weight: 300;
+}
+
+
+.auth-sec .container .row input.form-control {
+  border-radius: 0;
+  margin-bottom: 28px;
+}
+
+/* *************** Footer Styling *******************  */
+
+
+.footer-sec {
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 47, 121, 1) 39%, rgba(0, 74, 173, 1) 94%);
 }
 
 .footer-sec * {
-    color: white;
+  color: white;
 }
 
 .bottom-footer {
-    background: #030226;
+  background: #030226;
 }

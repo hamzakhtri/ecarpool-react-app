@@ -1,13 +1,13 @@
 import React from 'react'
 import contactImg from '../../assets/img/contact-img.png'
 
-function Contact() {
+function ContactForm({title}) {
     return (
         <section className='contact-sec'>
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-lg-6">
-                        <h2>Contact Us</h2>
+                        <h2>{title}</h2>
                         <div className="form-sec">
                             <div className="input-field">
                                 <input type="text" placeholder='Enter Name' className='form-control' />
@@ -32,4 +32,4 @@ function Contact() {
     )
 }
 
-export default Contact
+export default ContactForm
