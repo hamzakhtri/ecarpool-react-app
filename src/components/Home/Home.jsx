@@ -5,6 +5,7 @@ import AboutSec from '../AboutSec/AboutSec'
 import MapSec from '../MapSec/MapSec'
 import Testimonial from '../Testimonials/Testimonial'
 import Footer from '../Footer/Footer'
+import Contact from '../Contact/Contact'
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
         <AboutSec/>
         <MapSec/>
         <Testimonial/>
+        <Contact/>
         <Footer/>
     </div>
   )

@@ -193,7 +193,7 @@ section.about-sec .abt-txt p {
 
 section.map-sec {
     padding: 50px 0px !important;
-    background: #004aad;
+    background: #040833;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -310,6 +310,45 @@ section.map-sec {
     bottom: -13px;
     border-radius: 9px;
 }
+
+
+
+
+
+/* ******************* Contact Sec Styling *****************************/
+
+
+.contact-sec .form-sec .form-control {
+  margin: 20px 0px;
+  padding: 13px;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid var(--theme-color);
+  font-size: 18px;
+}
+
+.contact-sec .form-sec .form-control:focus{
+  box-shadow: none;
+}
+
+.contact-sec h2 {
+  font-size: 38px;
+  font-weight: 600;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.contact-sec h2::after {
+  content: "";
+  width: 160px;
+  height: 4px;
+  background: #004aad;
+  left: 0;
+  position: absolute;
+  bottom: -13px;
+  border-radius: 9px;
+}
+
 
  /* *************** Footer Styling *******************  */
 
