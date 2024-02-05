@@ -1,7 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 function Footer() {
+
+    const user = useSelector(state=> state.user.currentUser);
+
     return (
         <>
             {/* Footer */}
@@ -56,7 +60,30 @@ function Footer() {
                             </div>
                             {/* Grid column */}
                             {/* Grid column */}
-                            <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                            {user ? <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                                {/* Links */}
+                                <h6 className="text-uppercase fw-bold mb-4">Menu</h6>
+                                <p>
+                                    <Link to="/" className="text-reset">
+                                        Find Rides
+                                    </Link>
+                                </p>
+                                <p>
+                                    <Link to="/sharerides" className="text-reset">
+                                        Share Rides
+                                    </Link>
+                                </p>
+                                <p>
+                                    <Link to="/chatroom" className="text-reset">
+                                        Chatroom
+                                    </Link>
+                                </p>
+                                <p>
+                                    <Link to="/profile" className="text-reset">
+                                        My Profile
+                                    </Link>
+                                </p>
+                            </div> : <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                                 {/* Links */}
                                 <h6 className="text-uppercase fw-bold mb-4">Menu</h6>
                                 <p>
@@ -84,7 +111,7 @@ function Footer() {
                                         Sign Up
                                     </Link>
                                 </p>
-                            </div>
+                            </div>}
                             {/* Grid column */}
                             {/* Grid column */}
                             
