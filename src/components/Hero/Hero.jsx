@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 function Hero() {
@@ -13,8 +14,8 @@ function Hero() {
                             <h1 className="text-white">E-Carpool</h1>
                             <p className="text-white">Unlock the future of commuting with our E-Carpool platform. Share rides, book seamlessly, and explore together. Join us in shaping a connected and sustainable way to travel. Your journey starts here.</p>
                             <div className="hero-btns">
-                                <button className="theme-btn">Register</button>
-                                <button className="theme-btn">Contact</button>
+                                <button className="theme-btn"><Link to="/signup" className="text-white">Register</Link></button>
+                                <button className="theme-btn"><Link to="/contact" className="text-white">Contact</Link></button>
                             </div>
                         </div>
                     </div>

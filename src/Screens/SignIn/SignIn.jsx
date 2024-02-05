@@ -1,28 +1,64 @@
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { auth } from '../../config/firebase';
+import { auth, db } from '../../config/firebase';
+import Swal from 'sweetalert2';
+import { useDispatch,  } from 'react-redux';
+import { doc, getDoc } from 'firebase/firestore';
+import { addCurrentUser } from '../../store/features/user/userSlice';
 
 function SignIn() {
-
 
     // creating form state to get user Loged in 
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+
 
 
     const login = async () => {
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-            navigate("/");
+          // function to login user into the application
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+      
+          // get data of user and set it into redux store
+          const docRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(docRef);
+          const currentUser = {
+            id: docSnap.data().id,
+            username: docSnap.data().username
+          };
+      
+          dispatch(addCurrentUser(currentUser));
+        //   console.log(currentUser);
+      
+          await Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Logged In Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+      
+          navigate("/");
         } catch (error) {
-            console.log(error.message);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Invalid Credentials",
+          });
+        } finally {
+          setEmail("");
+          setPassword("");
         }
-    }
+      };
 
+ 
 
     return (
         <div className="w-100 ps-md-0 auth-sec">
@@ -67,10 +103,10 @@ function SignIn() {
                                                 Sign in
                                             </button>
                                             <div className="d-flex justify-content-between my-3">
-                                                <Link className="text-white" to="/forgotpassword">
+                                                <Link className="text-white small" to="/forgotpassword">
                                                     Forgot password?
                                                 </Link>
-                                                <Link className="text-white" to="/signup">
+                                                <Link className="text-white small" to="/signup">
                                                     Dont Have Account? <u>Singup</u>
                                                 </Link>
                                             </div>

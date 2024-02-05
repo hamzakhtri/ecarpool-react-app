@@ -117,7 +117,7 @@ function Footer() {
                 <div className='bottom-footer text-center py-4'
                 >
                     © 2024 Copyright: &nbsp;
-                    <Link className="text-reset fw-bold" to="https://mdbootstrap.com/">
+                    <Link className="text-reset fw-bold" to="/">
                         E-Carpool
                     </Link>
                 </div>

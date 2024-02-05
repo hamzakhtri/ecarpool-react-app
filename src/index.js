@@ -6,13 +6,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import persistStore from 'redux-persist/es/persistStore';
+
+
+const persistor = persistStore(store)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <ScrollToTop/>
-      <App />
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <ScrollToTop />
+          <App />
+        </PersistGate>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

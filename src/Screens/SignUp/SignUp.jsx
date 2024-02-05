@@ -1,8 +1,10 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { auth, db } from '../../config/firebase';
 import { doc, setDoc } from "firebase/firestore";
+import Swal from 'sweetalert2';
+
 
 
 function SignUp() {
@@ -13,6 +15,7 @@ function SignUp() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     // creating a function to register user in firebase and save user in users collection of firestore 
 
@@ -20,13 +23,21 @@ function SignUp() {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await setDoc(doc(db, "users", userCredential.user.uid), { username, email, password, id: userCredential.user.uid });
-
+            setUsername("");
+            setEmail("");
+            setPassword("");
+            await Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Account Created",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            navigate("/");
         } catch (error) {
             console.log(error.message);
         }
-        setUsername("");
-        setEmail("");
-        setPassword("");
+
     }
 
 
@@ -85,7 +96,7 @@ function SignUp() {
                                                 Sign up
                                             </button>
                                             <div className="my-3">
-                                                <Link to="/signin" className="text-white" href="#">
+                                                <Link to="/signin" className="text-white small" href="#">
                                                     Allready Have Account? <u>Signin</u>
                                                 </Link>
                                             </div>
