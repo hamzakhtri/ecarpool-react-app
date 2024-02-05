@@ -411,8 +411,28 @@ section.map-sec {
 
 .auth-sec .container .row input.form-control {
   border-radius: 0;
-  margin-bottom: 28px;
+  margin-bottom: 15px;
 }
+
+
+
+
+
+
+
+
+/* ********************** Profile Page Styling ********************  */
+
+.profile-form-sec .row .input-field .form-control {
+  border: 2px solid gray;
+}
+
+.profile-form-sec .row .input-field input.form-control:focus {
+  box-shadow: none;
+}
+
+
+
 
 /* *************** Footer Styling *******************  */
 

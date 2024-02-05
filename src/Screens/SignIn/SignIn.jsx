@@ -13,6 +13,8 @@ function SignIn() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,6 +23,9 @@ function SignIn() {
 
 
     const login = async () => {
+
+        setLoading(true);
+
         try {
           // function to login user into the application
           const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -29,20 +34,27 @@ function SignIn() {
           // get data of user and set it into redux store
           const docRef = doc(db, "users", user.uid);
           const docSnap = await getDoc(docRef);
+          const logedUser = docSnap.data();
           const currentUser = {
-            id: docSnap.data().id,
-            username: docSnap.data().username
-          };
+            id: logedUser.id,
+            username: logedUser.username,
+            email : logedUser.email,
+            phoneNo: logedUser.phoneNo,
+            gender : logedUser.gender,
+            address : logedUser.address,
+            password : logedUser.password
+        };
       
           dispatch(addCurrentUser(currentUser));
-        //   console.log(currentUser);
-      
+
+          setLoading(false);
+          
           await Swal.fire({
             position: "center",
             icon: "success",
             title: "Logged In Successfully",
             showConfirmButton: false,
-            timer: 1500
+            timer: 1000
           });
       
           navigate("/");
@@ -100,7 +112,7 @@ function SignIn() {
                                                 type="button"
                                                 onClick={login}
                                             >
-                                                Sign in
+                                                {loading ? "Loading..." : "Sign in"}
                                             </button>
                                             <div className="d-flex justify-content-between my-3">
                                                 <Link className="text-white small" to="/forgotpassword">
