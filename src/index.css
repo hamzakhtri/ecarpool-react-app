@@ -463,6 +463,12 @@ section.map-sec {
   box-shadow: none;
 }
 
+ /* ***************************** Ride Info Page Styling ********************** */
+
+ .container.ride-info-page {
+  padding: 150px 0 !important;
+}
+
 
 /* *************** Footer Styling *******************  */
 

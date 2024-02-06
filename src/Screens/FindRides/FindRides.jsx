@@ -2,6 +2,7 @@ import React, {} from 'react'
 import RideCard from '../../components/RideCard/RideCard'
 
 import { useSelector } from 'react-redux';
+import Preloader from '../../components/Preloader/Preloader';
 
 function FindRides() {
 
@@ -9,6 +10,9 @@ function FindRides() {
 
     const rides = useSelector(state => state.rides.rides);
 
+    if(rides === false){
+        return <Preloader/>
+    }
 
 
     return (
@@ -22,7 +26,7 @@ function FindRides() {
                     </div>
                 </div>
             </div>
-            <div className="container contact-page-form">
+           <div className="container contact-page-form">
                 <div className="pt-5 pb-5">
                     <div className="row g-5">
                         {rides.map((ride) => {
@@ -34,7 +38,8 @@ function FindRides() {
                         })}
                     </div>
                 </div>
-            </div>
+            </div> :
+            
         </section>
     )
 }

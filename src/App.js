@@ -16,9 +16,14 @@ import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from './config/firebase';
 import { useEffect } from 'react';
 import { loadRides } from './store/features/rides/ridesSlice';
+import RideInfo from './Screens/RideInfo/RideInfo';
 
 
 function App() {
+
+  // getting current user from redux 
+
+  const user = useSelector(state => state.user.currentUser);
 
   // getting all rides when loading applicatoin and setting it to redux store 
 
@@ -40,7 +45,6 @@ function App() {
 
   }, [dispatch])
 
-  const user = useSelector(state => state.user.currentUser);
 
 
   return (
@@ -51,6 +55,7 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/sharerides' element={<ShareRides />} />
+        <Route path='/rideinfo/:id' element={<RideInfo />} />
 
         <Route path='*' element={<NotFound />} />
       </Route>

@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-function RideCard({ride}) {
+function RideCard({ ride }) {
     return (
         <div className="card" >
             <img src={ride.imageUrl} width={250} height={250} className="card-img-top" alt="..." />
@@ -9,9 +10,9 @@ function RideCard({ride}) {
                 <p className="p-0 mb-1">Car: <b>{ride.carName}</b></p>
                 <p className="p-0 mb-1">Driver Name: <b>{ride.driverName}</b></p>
                 <h5 className="card-title my-3">Rs : {ride.rent}</h5>
-                <a href="/" className="btn btn-primary">
-                    Go somewhere
-                </a>
+                <Link to={`/rideinfo/${ride.id}`} className="btn btn-dark">
+                    More Info
+                </Link>
             </div>
         </div>
     )

@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { addDoc, collection } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addDoc, collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { storage } from '../../config/firebase';
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Swal from 'sweetalert2';
+import RideCard from '../../components/RideCard/RideCard';
+import { addUserAds } from '../../store/features/user/userSlice';
+
+function timeConversion(e) {
+    const inputTime = e;
+    const time = new Date();
+    const [hours, minutes] = inputTime.split(':');
+    time.setHours(parseInt(hours, 10));
+    time.setMinutes(parseInt(minutes, 10));
+    const timeString = time.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    });
+    return timeString;
+}
+
 
 
 function ShareRides() {
 
     const user = useSelector(state => state.user.currentUser);
+    const dispatch = useDispatch();
     const [carName, setCarName] = useState("");
     const [from, setFrom] = useState("");
     const [to, setTo] = useState("");
@@ -19,15 +37,16 @@ function ShareRides() {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("10:00");
     const [status, setStatus] = useState("active");
-    const [DriverAddrss, setDriverAddress] = useState("");
+    const [driverAddress, setDriverAddress] = useState("");
     const [loading, setLoading] = useState(false);
- 
+
+
     // Function to handle ride creation
     const createRide = async () => {
 
 
         // checking if any fields empty or not 
-        if (carImage && carName && from && to && rent && numberOfSeats && date && DriverAddrss) {
+        if (carImage && carName && from && to && rent && numberOfSeats && date && driverAddress) {
 
 
             setLoading(true);
@@ -49,9 +68,10 @@ function ShareRides() {
                 date,
                 imageUrl: url,
                 gender: user.gender,
-                time,
+                time : timeConversion(time),
                 status,
-                DriverAddrss
+                driverAddress,
+                phoneNo : user.phoneNo
             });
 
             await Swal.fire({
@@ -87,6 +107,32 @@ function ShareRides() {
         setLoading(false);
 
     }
+
+
+    // getting all current user ads 
+
+
+    useEffect(() => {
+
+        const q = query(collection(db, "rides"), where("userId", "==", user.id));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const rides = [];
+            querySnapshot.forEach((doc) => {
+                rides.push({ ...doc.data(), id: doc.id });
+            });
+            dispatch(addUserAds(rides));
+        });
+
+        return () => unsubscribe();
+
+
+    }, [dispatch, user.id, user])
+
+
+    const userAds = useSelector(state => state.user.userAds);
+
+
+
 
     return (
         <div className='share-rides-page'>
@@ -199,7 +245,7 @@ function ShareRides() {
                             <input type="text"
                                 placeholder='Driver Address'
                                 className='form-control'
-                                value={DriverAddrss}
+                                value={driverAddress}
                                 onChange={(e) => setDriverAddress(e.target.value)}
                             />
                         </div>
@@ -210,8 +256,24 @@ function ShareRides() {
                     <label className='d-block h4 mt-4'>Upload Car Image</label>
                 </div>
                 <div className='text-center'>
-                    <button onClick={createRide} className='theme-btn m-0 mt-4' style={{width: "180px"}}>{loading ? "Loading..." : "Create Ride"}</button>
+                    <button onClick={createRide} className='theme-btn m-0 mt-4' style={{ width: "180px" }}>{loading ? "Loading..." : "Create Ride"}</button>
                 </div>
+
+
+
+                <div className="my-ads pt-5 my-5">
+                    <h2>My Ads</h2>
+                    <div className="row">
+                        {userAds.map((ride) => {
+                            return (
+                                <div key={ride.id} className="col-lg-4">
+                                    <RideCard ride={ride} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+
             </div>
         </div>
     )
