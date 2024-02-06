@@ -17,13 +17,20 @@ function ShareRides() {
     const [numberOfSeats, setNumberOfSeats] = useState("");
     const [carImage, setCarImage] = useState("");
     const [date, setDate] = useState("");
-
+    const [time, setTime] = useState("10:00");
+    const [status, setStatus] = useState("active");
+    const [DriverAddrss, setDriverAddress] = useState("");
+    const [loading, setLoading] = useState(false);
+ 
     // Function to handle ride creation
     const createRide = async () => {
 
-        // checking if any fields empty or not 
-        if (carImage && carName && from && to && rent && numberOfSeats && date) {
 
+        // checking if any fields empty or not 
+        if (carImage && carName && from && to && rent && numberOfSeats && date && DriverAddrss) {
+
+
+            setLoading(true);
             // upload image to firebase storage and getting download 
             // url and setting it into firesotre rides collection 
             const storageRef = ref(storage, `images/${Date.now()}.jpg`);
@@ -40,7 +47,11 @@ function ShareRides() {
                 rent,
                 numberOfSeats,
                 date,
-                imageUrl: url
+                imageUrl: url,
+                gender: user.gender,
+                time,
+                status,
+                DriverAddrss
             });
 
             await Swal.fire({
@@ -59,6 +70,9 @@ function ShareRides() {
             setRent("");
             setNumberOfSeats("");
             setDate("");
+            setTime("10:00");
+            setDriverAddress("");
+            setStatus("active");
 
         } else {
             console.error('Car image is not selected');
@@ -69,6 +83,8 @@ function ShareRides() {
             });
         }
 
+
+        setLoading(false);
 
     }
 
@@ -144,11 +160,47 @@ function ShareRides() {
                     <div className="col-lg-4">
                         <div className="input-field">
                             <input
+                                type="time"
+                                className='form-control'
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="row mb-4 mt-4">
+                    <div className="col-lg-4">
+                        <div className="input-field">
+                            <input
                                 type="number"
                                 placeholder='Number Of Seats'
                                 className='form-control'
                                 value={numberOfSeats}
                                 onChange={(e) => setNumberOfSeats(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="input-field">
+                            <select
+                                className='form-control border border-dark shadow-none'
+                                name="status"
+                                id="status"
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                            >
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="input-field">
+                            <input type="text"
+                                placeholder='Driver Address'
+                                className='form-control'
+                                value={DriverAddrss}
+                                onChange={(e) => setDriverAddress(e.target.value)}
                             />
                         </div>
                     </div>
@@ -158,7 +210,7 @@ function ShareRides() {
                     <label className='d-block h4 mt-4'>Upload Car Image</label>
                 </div>
                 <div className='text-center'>
-                    <button onClick={createRide} className='theme-btn m-0 mt-4 px-5'>Create Ride</button>
+                    <button onClick={createRide} className='theme-btn m-0 mt-4' style={{width: "180px"}}>{loading ? "Loading..." : "Create Ride"}</button>
                 </div>
             </div>
         </div>

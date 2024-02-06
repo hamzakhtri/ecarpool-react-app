@@ -1,8 +1,16 @@
-import React from 'react'
+import React, {} from 'react'
+import RideCard from '../../components/RideCard/RideCard'
+
+import { useSelector } from 'react-redux';
 
 function FindRides() {
 
-        
+
+
+    const rides = useSelector(state => state.rides.rides);
+
+
+
     return (
         <section className="findrides-page">
             <div className="inner-hero">
@@ -15,7 +23,16 @@ function FindRides() {
                 </div>
             </div>
             <div className="container contact-page-form">
-                <div className="pt-5">
+                <div className="pt-5 pb-5">
+                    <div className="row g-5">
+                        {rides.map((ride) => {
+                            return (
+                                <div key={ride.id} className="col-lg-4">
+                                    <RideCard ride={ride}/>
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
             </div>
         </section>
