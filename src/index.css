@@ -6,6 +6,10 @@
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  padding-right: 0 !important;
+}
+
 a{
   text-decoration: none;
 }
@@ -432,6 +436,18 @@ section.map-sec {
 }
 
 
+
+
+/* ********************** Share Rides Page Styling *********************/
+
+
+.share-rides-page .input-field input {
+  border: 1px solid;
+}
+
+.share-rides-page .input-field input:focus {
+  box-shadow: none;
+}
 
 
 /* *************** Footer Styling *******************  */

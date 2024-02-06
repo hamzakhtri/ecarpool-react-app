@@ -3,13 +3,11 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { auth, db } from '../../config/firebase';
 import Swal from 'sweetalert2';
-import { useDispatch,  } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
 import { addCurrentUser } from '../../store/features/user/userSlice';
 
 function SignIn() {
-
-    // creating form state to get user Loged in 
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -18,59 +16,52 @@ function SignIn() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
-
-
-
-    const login = async () => {
+    const login = async (e) => {
+        e.preventDefault(); // Prevent the default form submission behavior
 
         setLoading(true);
 
         try {
-          // function to login user into the application
-          const userCredential = await signInWithEmailAndPassword(auth, email, password);
-          const user = userCredential.user;
-      
-          // get data of user and set it into redux store
-          const docRef = doc(db, "users", user.uid);
-          const docSnap = await getDoc(docRef);
-          const logedUser = docSnap.data();
-          const currentUser = {
-            id: logedUser.id,
-            username: logedUser.username,
-            email : logedUser.email,
-            phoneNo: logedUser.phoneNo,
-            gender : logedUser.gender,
-            address : logedUser.address,
-            password : logedUser.password
-        };
-      
-          dispatch(addCurrentUser(currentUser));
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-          setLoading(false);
-          
-          await Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Logged In Successfully",
-            showConfirmButton: false,
-            timer: 1000
-          });
-      
-          navigate("/");
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+            const logedUser = docSnap.data();
+            const currentUser = {
+                id: logedUser.id,
+                username: logedUser.username,
+                email: logedUser.email,
+                phoneNo: logedUser.phoneNo,
+                gender: logedUser.gender,
+                address: logedUser.address,
+                password: logedUser.password
+            };
+
+            dispatch(addCurrentUser(currentUser));
+
+            setLoading(false);
+
+            await Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Logged In Successfully",
+                showConfirmButton: false,
+                timer: 1000
+            });
+
+            navigate("/");
         } catch (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Invalid Credentials",
-          });
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Invalid Credentials",
+            });
         } finally {
-          setEmail("");
-          setPassword("");
+            setEmail("");
+            setPassword("");
         }
-      };
-
- 
+    };
 
     return (
         <div className="w-100 ps-md-0 auth-sec">
@@ -82,8 +73,7 @@ function SignIn() {
                             <div className="row">
                                 <div className="col-md-9 col-lg-8 mx-auto">
                                     <h3 className="login-heading mb-4 text-white h2 fw-medium">Sign In Now</h3>
-                                    {/* Sign In Form */}
-                                    <div>
+                                    <form onSubmit={login}>
                                         <div className="form-floating mb-3">
                                             <input
                                                 type="email"
@@ -109,8 +99,7 @@ function SignIn() {
                                         <div className="d-grid">
                                             <button
                                                 className="theme-btn m-0 text-uppercase py-3 mb-2"
-                                                type="button"
-                                                onClick={login}
+                                                type="submit"
                                             >
                                                 {loading ? "Loading..." : "Sign in"}
                                             </button>
@@ -119,7 +108,7 @@ function SignIn() {
                                                     Forgot password?
                                                 </Link>
                                                 <Link className="text-white small" to="/signup">
-                                                    Dont Have Account? <u>Singup</u>
+                                                    Don't Have Account? <u>Sign up</u>
                                                 </Link>
                                             </div>
                                             <div>
@@ -131,7 +120,7 @@ function SignIn() {
                                                 </Link>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -139,8 +128,7 @@ function SignIn() {
                 </div>
             </div>
         </div>
-
-    )
+    );
 }
 
-export default SignIn
+export default SignIn;

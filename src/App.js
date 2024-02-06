@@ -11,6 +11,7 @@ import NotFound from './Screens/NotFound/NotFound';
 import FindRides from './Screens/FindRides/FindRides';
 import { useSelector } from 'react-redux';
 import Profile from './Screens/Profile/Profile';
+import ShareRides from './Screens/ShareRides/ShareRides';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/sharerides' element={<ShareRides />} />
 
         <Route path='*' element={<NotFound />} />
       </Route>

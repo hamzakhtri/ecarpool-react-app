@@ -42,23 +42,28 @@ function Profile() {
   }
 
 
+  // this function take new info and update that info infto firestore firebase 
+
   const updateProfile = async () => {
 
     const docref = doc(db, "users", user.id);
     await updateDoc(docref, {
-      username : newName,
-      phoneNo : newPhoneNo,
-      address : newAddress,
-      gender : newGender
+      username: newName,
+      phoneNo: newPhoneNo,
+      address: newAddress,
+      gender: newGender
     });
 
-    dispatch(addCurrentUser( {
+
+    // updata current User because data is update now 
+
+    dispatch(addCurrentUser({
       ...user,
-      username : newName,
-      phoneNo : newPhoneNo,
-      address : newAddress,
-      gender : newGender,
-      
+      username: newName,
+      phoneNo: newPhoneNo,
+      address: newAddress,
+      gender: newGender,
+
     }));
 
     setReadOnly(true);
@@ -75,119 +80,135 @@ function Profile() {
 
   }
 
-  const deleteAccount = async ()=>{
+  // delete user Account and also remove his adds and info 
+
+  const deleteAccount = async () => {
 
   }
 
+
+  
+
   return (
 
-    <div className='container py-5 mt-5'>
-      <div className="d-flex justify-content-between align-items-center mt-4">
-        <div className="profile-info d-flex align-items-center">
-          <div>
-            <img src={avatar} alt="avatar" width="120" className='img-fluid me-3' />
+    <>
+      <div className="inner-hero">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-5">
+              <h1 className='text-white'>My Profile</h1>
+            </div>
           </div>
-          <div>
-            <h3>{user && user.username}</h3>
-            <p className="m-0 p-0">{user && user.email}</p>
-          </div>
-        </div>
-        <div>
-          <button onClick={logout} className='theme-btn'>Logout</button>
         </div>
       </div>
-      <div className="profile-form-sec">
-        <div className="row mb-4 mt-4">
-          <div className="col-lg-4">
-            <div className="input-field">
-              <input
-                type="text"
-                placeholder='Enter Name'
-                className='form-control'
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                disabled={readOnly}
-              />
+      <div className="container mb-4 mt-3">
+        <div className="d-flex justify-content-between align-items-center mt-4">
+          <div className="profile-info d-flex align-items-center">
+            <div>
+              <img src={avatar} alt="avatar" width="120" className='img-fluid me-3' />
+            </div>
+            <div>
+              <h3>{user && user.username}</h3>
+              <p className="m-0 p-0">{user && user.email}</p>
             </div>
           </div>
-          <div className="col-lg-4">
-            <div className="input-field">
-              <input
-                type="email"
-                placeholder='Enter Email'
-                className='form-control'
-                value={newEmail}
-                onChange={(e) => setNewEmail(e.target.value)}
-                disabled
-              />
-            </div>
+          <div>
+            <button onClick={logout} className='theme-btn'>Logout</button>
           </div>
-          <div className="col-lg-4">
-            <div className="input-field">
-              <input type="password"
-                placeholder='Enter Password'
-                className='form-control'
-                value={newPassowrd}
-                onChange={(e) => setNewPassword(e.target.value)}
-                disabled
-              />
+        </div>
+        <div className="profile-form-sec">
+          <div className="row mb-4 mt-4">
+            <div className="col-lg-4">
+              <div className="input-field">
+                <input
+                  type="text"
+                  placeholder='Enter Name'
+                  className='form-control'
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  disabled={readOnly}
+                />
+              </div>
             </div>
-          </div>
+            <div className="col-lg-4">
+              <div className="input-field">
+                <input
+                  type="email"
+                  placeholder='Enter Email'
+                  className='form-control'
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  disabled
+                />
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="input-field">
+                <input type="password"
+                  placeholder='Enter Password'
+                  className='form-control'
+                  value={newPassowrd}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  disabled
+                />
+              </div>
+            </div>
 
-        </div>
-        <div className="row">
-          <div className="col-lg-4">
-            <div className="input-field">
-              <input
-                type="number"
-                placeholder='Enter Phone No'
-                className='form-control'
-                value={newPhoneNo}
-                onChange={(e) => setNewPhoneNo(e.target.value)}
-                disabled={readOnly}
-              />
+          </div>
+          <div className="row">
+            <div className="col-lg-4">
+              <div className="input-field">
+                <input
+                  type="number"
+                  placeholder='Enter Phone No'
+                  className='form-control'
+                  value={newPhoneNo}
+                  onChange={(e) => setNewPhoneNo(e.target.value)}
+                  disabled={readOnly}
+                />
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="input-field">
+                <input
+                  type="text"
+                  placeholder='Enter Address'
+                  className='form-control'
+                  value={newAddress}
+                  onChange={(e) => setNewAddress(e.target.value)}
+                  disabled={readOnly}
+                />
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="input-field">
+                <select
+                  className='form-control'
+                  name="gender"
+                  id="gender"
+                  value={newGender}
+                  onChange={(e) => setNewGender(e.target.value)}
+                  disabled={readOnly}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
             </div>
           </div>
-          <div className="col-lg-4">
-            <div className="input-field">
-              <input
-                type="text"
-                placeholder='Enter Address'
-                className='form-control'
-                value={newAddress}
-                onChange={(e) => setNewAddress(e.target.value)}
-                disabled={readOnly}
-              />
+          <div className="d-flex justify-content-between align-items-center">
+            <div>
+              {readOnly ?
+                <button onClick={handleEdit} className='btn btn-dark my-4 fs-5 px-4'>Edit</button> :
+                <button onClick={updateProfile} className='btn btn-success my-4 fs-5 px-4'>Update</button>}
             </div>
-          </div>
-          <div className="col-lg-4">
-            <div className="input-field">
-              <select
-                className='form-control'
-                name="gender"
-                id="gender"
-                value={newGender}
-                onChange={(e) => setNewGender(e.target.value)}
-                disabled={readOnly}
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
+            <div>
+              <button onClick={deleteAccount} className='btn btn-danger my-4 fs-5 px-4'>Delete Account</button>
             </div>
-          </div>
-        </div>
-        <div className="d-flex justify-content-between align-items-center">
-          <div>
-            {readOnly ?
-              <button onClick={handleEdit} className='btn btn-dark my-4 fs-5 px-4'>Edit</button> :
-              <button onClick={updateProfile} className='btn btn-success my-4 fs-5 px-4'>Update</button>}
-          </div>
-          <div>
-            <button onClick={deleteAccount} className='btn btn-danger my-4 fs-5 px-4'>Delete Account</button>
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
