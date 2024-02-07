@@ -14,9 +14,10 @@ import Profile from './Screens/Profile/Profile';
 import ShareRides from './Screens/ShareRides/ShareRides';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from './config/firebase';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { loadRides } from './store/features/rides/ridesSlice';
 import RideInfo from './Screens/RideInfo/RideInfo';
+import Preloader from './components/Preloader/Preloader';
 
 
 function App() {
@@ -24,14 +25,12 @@ function App() {
   // getting current user from redux 
 
   const user = useSelector(state => state.user.currentUser);
-
-  // getting all rides when loading applicatoin and setting it to redux store 
-
-
+  const [loadingData, setLoadingData] = useState(true); 
+  
+  // getting all rides when loading application and setting it to redux store 
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
-
     const q = query(collection(db, "rides"), where("status", "==", "active"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const rides = [];
@@ -39,12 +38,15 @@ function App() {
         rides.push({ ...doc.data(), id: doc.id });
       });
       dispatch(loadRides(rides));
+      setLoadingData(false); // Set loading state to false once data is fetched
     });
-
+  
     return () => unsubscribe();
-
   }, [dispatch])
-
+  
+  if (loadingData) {
+    return <Preloader/>; // Show preloader only when loading data
+  }  
 
 
   return (

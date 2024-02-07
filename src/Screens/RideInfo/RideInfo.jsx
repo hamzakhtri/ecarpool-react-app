@@ -46,7 +46,7 @@ function RideInfo() {
             <div className="row align-items-center">
                 <div className="col-lg-5">
                     <div className="img-sec">
-                        <img src={rideInfo.imageUrl} className='img-fluid' alt="" />
+                        <img src={rideInfo.imageUrl} className='img-fluid w-100' alt="" />
                     </div>
                 </div>
                 <div className="col-lg-7">

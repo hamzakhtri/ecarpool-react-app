@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { auth, db } from '../../config/firebase';
-import { signOut } from 'firebase/auth';
+import { EmailAuthProvider, deleteUser, reauthenticateWithCredential, signOut } from 'firebase/auth';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCurrentUser } from '../../store/features/user/userSlice';
 import avatar from "../../assets/img/avatar.png"
-import { doc, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 function Profile() {
 
@@ -17,10 +17,10 @@ function Profile() {
   const [newName, setNewName] = useState(user && user.username);
   const [newEmail, setNewEmail] = useState(user && user.email);
   const [newPhoneNo, setNewPhoneNo] = useState(user && user.phoneNo);
-  const [newPassowrd, setNewPassword] = useState(user && user.password);
   const [newAddress, setNewAddress] = useState(user && user.address);
   const [newGender, setNewGender] = useState(user && user.gender);
   const [readOnly, setReadOnly] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const logout = async () => {
     await signOut(auth);
@@ -76,18 +76,78 @@ function Profile() {
       timer: 1500
     })
 
+  }
 
+  // function which take user id and match in rides collection if there diver id match usr id it will delete all ride 
 
+  const deleteRidesByDriverId = async (driverId) => {
+    // Query for documents in the "rides" collection where the driverId matches
+    const q = query(collection(db, "rides"), where("userId", "==", driverId));
+
+    try {
+      const querySnapshot = await getDocs(q);
+
+      // Iterate over the query snapshot and delete each document
+      querySnapshot.forEach(async (doc) => {
+        await deleteDoc(doc.ref);
+        console.log("Document deleted successfully:", doc.id);
+      });
+
+      console.log("All documents deleted successfully");
+    } catch (error) {
+      console.error("Error deleting documents:", error);
+      // Handle error (e.g., display error message to the user)
+    }
   }
 
   // delete user Account and also remove his adds and info 
 
   const deleteAccount = async () => {
 
+
+    // Display confirmation dialog using SweetAlert
+    const confirmationResult = await Swal.fire({
+      title: 'Are you sure?',
+      text: "This action cannot be undone!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    });
+
+    if (confirmationResult.isConfirmed) {
+      // show loading to user while deleting 
+
+      setLoading(true);
+
+      // User confirmed, proceed with account deletion
+      
+      const credentials = EmailAuthProvider.credential(user.email, user.password);
+      try {
+        await reauthenticateWithCredential(auth.currentUser, credentials);
+
+        // delete all rides of user who want to delete accout 
+
+        await deleteRidesByDriverId(user.id);
+
+        // also delte user from firestore database 
+
+        await deleteDoc(doc(db, "users", user.id));
+
+        await deleteUser(auth.currentUser);
+        logout();
+      } catch (error) {
+        console.error("Error deleting account:", error);
+        // Handle account deletion error (e.g., display error message to the user)
+      }
+    } else {
+      // User cancelled, do nothing
+    }
+
+    // after delete succesfully make loading false 
+    setLoading(false);
   }
 
-
-  
 
   return (
 
@@ -147,8 +207,7 @@ function Profile() {
                 <input type="password"
                   placeholder='Enter Password'
                   className='form-control'
-                  value={newPassowrd}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  value="**********"
                   disabled
                 />
               </div>
@@ -203,7 +262,7 @@ function Profile() {
                 <button onClick={updateProfile} className='btn btn-success my-4 fs-5 px-4'>Update</button>}
             </div>
             <div>
-              <button onClick={deleteAccount} className='btn btn-danger my-4 fs-5 px-4'>Delete Account</button>
+              <button onClick={deleteAccount} className='btn btn-danger my-4 fs-5 px-4'>{loading ? "Deleting..." : "Delete Account"}</button>
             </div>
           </div>
         </div>

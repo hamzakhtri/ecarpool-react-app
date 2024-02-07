@@ -82,10 +82,12 @@ function SignUp() {
                 navigate("/");
 
             } catch (error) {
+                setLoading(false);
                 console.log(error.message);
             }
 
         }else{
+            setLoading(false);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",

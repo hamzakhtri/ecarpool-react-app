@@ -41,7 +41,7 @@ function SignIn() {
             dispatch(addCurrentUser(currentUser));
 
             setLoading(false);
-
+            
             await Swal.fire({
                 position: "center",
                 icon: "success",
@@ -49,15 +49,17 @@ function SignIn() {
                 showConfirmButton: false,
                 timer: 1000
             });
-
+            
             navigate("/");
         } catch (error) {
+            setLoading(false);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Invalid Credentials",
             });
         } finally {
+            setLoading(false);
             setEmail("");
             setPassword("");
         }
