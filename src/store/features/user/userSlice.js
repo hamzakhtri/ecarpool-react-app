@@ -15,10 +15,13 @@ export const userSlice = createSlice({
 
         addUserAds : (state, action)=>{
             state.userAds = action.payload;
+        },
+        updateUserAds : (state, action)=>{
+            state.userAds = state.userAds.map((ride)=> ride.id === action.payload.id ? [...ride, ...action.payload.updatedRide] : ride);
         }
     }
 })
 
-export const {addCurrentUser, addUserAds} = userSlice.actions;
+export const {addCurrentUser, addUserAds, updateUserAds} = userSlice.actions;
 export default userSlice.reducer; 
 

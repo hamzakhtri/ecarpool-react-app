@@ -55,6 +55,23 @@ function Profile() {
     });
 
 
+    const ridesRef = collection(db, "rides");
+    const q = query(ridesRef, where("userId", "==", user.id));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (doc) => {
+
+    await updateDoc(doc.ref, { 
+      driverName: newName,
+      phoneNo: newPhoneNo,
+      gender : newGender
+    });
+
+    });
+
+
+
+
     // updata current User because data is update now 
 
     dispatch(addCurrentUser({
@@ -121,7 +138,7 @@ function Profile() {
       setLoading(true);
 
       // User confirmed, proceed with account deletion
-      
+
       const credentials = EmailAuthProvider.credential(user.email, user.password);
       try {
         await reauthenticateWithCredential(auth.currentUser, credentials);

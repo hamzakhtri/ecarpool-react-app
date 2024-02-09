@@ -28,11 +28,11 @@ function FindRides() {
             </div>
            <div className="container contact-page-form">
                 <div className="pt-5 pb-5">
-                    <div className="row g-5">
+                    <div className="row">
                         {rides.map((ride) => {
                             return (
                                 <div key={ride.id} className="col-lg-4">
-                                    <RideCard ride={ride}/>
+                                    <RideCard ride={ride} editMode={false}/>
                                 </div>
                             )
                         })}

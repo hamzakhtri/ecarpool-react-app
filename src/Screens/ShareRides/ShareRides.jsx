@@ -7,20 +7,10 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Swal from 'sweetalert2';
 import RideCard from '../../components/RideCard/RideCard';
 import { addUserAds } from '../../store/features/user/userSlice';
+import { convertTimeTo12HourFormat } from '../../hooks/timeConversion';
 
-function timeConversion(e) {
-    const inputTime = e;
-    const time = new Date();
-    const [hours, minutes] = inputTime.split(':');
-    time.setHours(parseInt(hours, 10));
-    time.setMinutes(parseInt(minutes, 10));
-    const timeString = time.toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true
-    });
-    return timeString;
-}
+// global function to convert 24 hour time format to 12 hour 
+
 
 
 
@@ -39,6 +29,9 @@ function ShareRides() {
     const [status, setStatus] = useState("active");
     const [driverAddress, setDriverAddress] = useState("");
     const [loading, setLoading] = useState(false);
+
+
+    // if the url contain an idea it mean we have to update document which have same id of params 
 
 
     // Function to handle ride creation
@@ -68,10 +61,10 @@ function ShareRides() {
                 date,
                 imageUrl: url,
                 gender: user.gender,
-                time : timeConversion(time),
+                time: convertTimeTo12HourFormat(time),
                 status,
                 driverAddress,
-                phoneNo : user.phoneNo
+                phoneNo: user.phoneNo
             });
 
             await Swal.fire({
@@ -260,20 +253,20 @@ function ShareRides() {
                 </div>
 
 
-
                 <div className="my-ads pt-5 my-5">
-                    <h2>My Ads</h2>
+                    <h2 className='my-3'>My Ads</h2>
                     <div className="row">
+
+                        {userAds.length < 1 && <div className='col-lg-12'><h2 className='text-secondary text-center my-4'>Empty Rides</h2></div>}
                         {userAds.map((ride) => {
                             return (
                                 <div key={ride.id} className="col-lg-4">
-                                    <RideCard ride={ride} />
+                                    <RideCard ride={ride} editMode={true}/>
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-
             </div>
         </div>
     )

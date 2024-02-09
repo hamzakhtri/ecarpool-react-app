@@ -58,6 +58,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/sharerides' element={<ShareRides />} />
         <Route path='/rideinfo/:id' element={<RideInfo />} />
+        <Route path='/editride/:id' element={<ShareRides />} />
 
         <Route path='*' element={<NotFound />} />
       </Route>

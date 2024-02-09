@@ -470,6 +470,17 @@ section.map-sec {
 }
 
 
+/* ******************* Edit Rdie Form Modal Styling ****************/
+
+.modal-form .input-field .form-control {
+  border: 1px solid;
+}
+
+.modal-form .input-field .form-control:focus {
+    box-shadow: none;
+}
+
+
 /* *************** Footer Styling *******************  */
 
 
