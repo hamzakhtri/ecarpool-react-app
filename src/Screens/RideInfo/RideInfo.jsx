@@ -1,10 +1,11 @@
-import { doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../../config/firebase';
 import Preloader from '../../components/Preloader/Preloader';
 import { useSelector } from 'react-redux';
 import EditRideModal from '../../components/EditRideModal/EditRideModal';
+import Swal from 'sweetalert2';
 
 function RideInfo() {
 
@@ -12,13 +13,14 @@ function RideInfo() {
     const [modalShow, setModalShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const user = useSelector(state => state.user.currentUser);
+    const navigate = useNavigate();
 
     const { id } = useParams();
 
 
     const getRideInfo = useCallback(() => {
         setLoading(true);
-    
+
         const docRef = doc(db, "rides", id);
         const unsubscribe = onSnapshot(docRef, (docSnap) => {
             if (docSnap.exists()) {
@@ -29,20 +31,43 @@ function RideInfo() {
             }
             setLoading(false);
         });
-    
+
         return unsubscribe; // Return unsubscribe function to clean up the listener
     }, [id, setRideInfo]);
-    
+
     useEffect(() => {
         const unsubscribe = getRideInfo();
-    
+
         return () => unsubscribe(); // Clean up the listener when the component unmounts
     }, [id, getRideInfo]);
+
+
+
+    // function to book ride 
+
+    const bookRide = async () => {
+        const docref = doc(db, "rides", id);
+        await updateDoc(docref, {
+            status: "inactive",
+            passangerId: user.id
+        });
+        await Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Ride Booked Successfully",
+            showConfirmButton: false,
+            timer: 1000
+        });
+        navigate("/profile");
+    }
+
+
 
 
     if (loading) {
         return <Preloader />
     }
+
 
 
     return (
@@ -75,7 +100,7 @@ function RideInfo() {
                             />
                         </>
                     ) : (
-                        <button className='theme-btn'>Book Now</button>
+                        <button onClick={bookRide} className='theme-btn'>Book Now</button>
                     )}
 
                 </div>

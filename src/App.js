@@ -31,7 +31,7 @@ function App() {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    const q = query(collection(db, "rides"), where("status", "==", "active"));
+    const q = query(collection(db, "rides"), where("status", "==", "active"), where("isCompleted", "==", false));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const rides = [];
       querySnapshot.forEach((doc) => {

@@ -201,7 +201,7 @@ function SignUp() {
                                                 type="button"
                                                 onClick={registerUser}
                                             >
-                                                {loading ? "Loading..." : "Sign up"}
+                                                {loading ? "Signing..." : "Sign up"}
                                             </button>
                                             <div className="my-3">
                                                 <Link to="/signin" className="text-white small" href="#">

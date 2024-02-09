@@ -83,11 +83,6 @@ function EditRideModal(props) {
             <Modal.Body>
                 <h4>{ride.driverName}</h4>
 
-
-
-
-
-
                 <div className='container pb-5 mt-5 modal-form'>
                     <div className="row mb-4 mt-4">
                         <div className="col-lg-4">
@@ -197,25 +192,6 @@ function EditRideModal(props) {
                 </div>
 
                     <p className='text-danger'>{error && "All Fields Are Required"}</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             </Modal.Body>

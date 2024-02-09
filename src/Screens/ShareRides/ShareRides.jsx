@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addDoc, collection, onSnapshot, query, where } from 'firebase/firestore';
 import { db } from '../../config/firebase';
@@ -29,6 +29,7 @@ function ShareRides() {
     const [status, setStatus] = useState("active");
     const [driverAddress, setDriverAddress] = useState("");
     const [loading, setLoading] = useState(false);
+    const fileInputRef = useRef(null);
 
 
     // if the url contain an idea it mean we have to update document which have same id of params 
@@ -42,50 +43,67 @@ function ShareRides() {
         if (carImage && carName && from && to && rent && numberOfSeats && date && driverAddress) {
 
 
-            setLoading(true);
-            // upload image to firebase storage and getting download 
-            // url and setting it into firesotre rides collection 
-            const storageRef = ref(storage, `images/${Date.now()}.jpg`);
-            const snapshot = await uploadBytes(storageRef, carImage);
-            const url = await getDownloadURL(snapshot.ref);
+            try {
 
-            // Add ride document to Firestore
-            await addDoc(collection(db, "rides"), {
-                userId: user.id,
-                driverName: user.username,
-                carName,
-                from,
-                to,
-                rent,
-                numberOfSeats,
-                date,
-                imageUrl: url,
-                gender: user.gender,
-                time: convertTimeTo12HourFormat(time),
-                status,
-                driverAddress,
-                phoneNo: user.phoneNo
-            });
+                setLoading(true);
+                // upload image to firebase storage and getting download 
+                // url and setting it into firesotre rides collection 
+                const storageRef = ref(storage, `images/${Date.now()}.jpg`);
+                const snapshot = await uploadBytes(storageRef, carImage);
+                const url = await getDownloadURL(snapshot.ref);
 
-            await Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "Ride Created",
-                showConfirmButton: false,
-                timer: 1500
-            });
-            // making all field empty 
+                // Add ride document to Firestore
+                await addDoc(collection(db, "rides"), {
+                    userId: user.id,
+                    driverName: user.username,
+                    carName,
+                    from,
+                    to,
+                    rent,
+                    numberOfSeats,
+                    date,
+                    imageUrl: url,
+                    gender: user.gender,
+                    time: convertTimeTo12HourFormat(time),
+                    status,
+                    driverAddress,
+                    phoneNo: user.phoneNo,
+                    passangerId: null,
+                    isCompleted: false,
+                    rating: null,
+                    userReview: null
+                });
 
-            setCarImage("");
-            setCarName("");
-            setFrom("");
-            setTo("");
-            setRent("");
-            setNumberOfSeats("");
-            setDate("");
-            setTime("10:00");
-            setDriverAddress("");
-            setStatus("active");
+                await Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Ride Created",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                // making all field empty 
+
+                setCarImage("");
+                fileInputRef.current.value = "";
+                setCarName("");
+                setFrom("");
+                setTo("");
+                setRent("");
+                setNumberOfSeats("");
+                setDate("");
+                setTime("10:00");
+                setDriverAddress("");
+                setStatus("active");
+
+
+            } catch (error) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: error.message,
+                });
+            }
+
 
         } else {
             console.error('Car image is not selected');
@@ -107,7 +125,7 @@ function ShareRides() {
 
     useEffect(() => {
 
-        const q = query(collection(db, "rides"), where("userId", "==", user.id));
+        const q = query(collection(db, "rides"), where("userId", "==", user.id), where("isCompleted", "==", false));
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const rides = [];
             querySnapshot.forEach((doc) => {
@@ -245,7 +263,7 @@ function ShareRides() {
                     </div>
                 </div>
                 <div className="input-field w-100">
-                    <input type="file" className='form-control' onChange={(e) => setCarImage(e.target.files[0])} name="uploadfile" id="img" />
+                    <input ref={fileInputRef} type="file" className='form-control' onChange={(e) => setCarImage(e.target.files[0])} name="uploadfile" id="img" />
                     <label className='d-block h4 mt-4'>Upload Car Image</label>
                 </div>
                 <div className='text-center'>
@@ -260,8 +278,8 @@ function ShareRides() {
                         {userAds.length < 1 && <div className='col-lg-12'><h2 className='text-secondary text-center my-4'>Empty Rides</h2></div>}
                         {userAds.map((ride) => {
                             return (
-                                <div key={ride.id} className="col-lg-4">
-                                    <RideCard ride={ride} editMode={true}/>
+                                <div key={ride.id} className="col-lg-4 mb-5">
+                                    <RideCard ride={ride} editMode={true} />
                                 </div>
                             )
                         })}

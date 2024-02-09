@@ -440,10 +440,10 @@ section.map-sec {
 
 
 /* ********************** Profile Page Styling ********************  */
-
+/* 
 .profile-form-sec .row .input-field .form-control {
   border: 2px solid gray;
-}
+} */
 
 .profile-form-sec .row .input-field input.form-control:focus {
   box-shadow: none;
@@ -461,6 +461,11 @@ section.map-sec {
 
 .share-rides-page .input-field input:focus {
   box-shadow: none;
+}
+
+/* *********************** Ride Card STyling ******************* */
+.ride-card img.card-img-top {
+  object-fit: cover;
 }
 
  /* ***************************** Ride Info Page Styling ********************** */

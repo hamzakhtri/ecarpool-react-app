@@ -105,7 +105,7 @@ function SignIn() {
                                                 className="theme-btn m-0 text-uppercase py-3 mb-2"
                                                 type="submit"
                                             >
-                                                {loading ? "Loading..." : "Sign in"}
+                                                {loading ? "Signing..." : "Sign in"}
                                             </button>
                                             <div className="d-flex justify-content-between my-3">
                                                 <Link className="text-white small" to="/forgotpassword">

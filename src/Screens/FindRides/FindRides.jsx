@@ -31,7 +31,7 @@ function FindRides() {
                     <div className="row">
                         {rides.map((ride) => {
                             return (
-                                <div key={ride.id} className="col-lg-4">
+                                <div key={ride.id} className="col-lg-4 mb-5">
                                     <RideCard ride={ride} editMode={false}/>
                                 </div>
                             )
