@@ -49,7 +49,7 @@ function RideInfo() {
         const docref = doc(db, "rides", id);
         await updateDoc(docref, {
             status: "inactive",
-            passangerId: user.id
+            passengerId: user.id
         });
         await Swal.fire({
             position: "center",
@@ -58,7 +58,7 @@ function RideInfo() {
             showConfirmButton: false,
             timer: 1000
         });
-        navigate("/profile");
+        navigate("/mybookings");
     }
 
 

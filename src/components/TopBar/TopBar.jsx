@@ -36,6 +36,7 @@ function TopBar() {
               <Nav className="justify-content-evenly flex-grow-1 pe-3">
                 <NavLink to="/" className={({ isActive }) => `${isActive ? 'active' : ""} me-3 menu-item`}>Find Rides</NavLink>
                 <NavLink to="/sharerides" className={({ isActive }) => `${isActive ? 'active' : ""} me-3 menu-item`}>Share Rides</NavLink>
+                <NavLink to="/mybookings" className={({ isActive }) => `${isActive ? 'active' : ""} me-3 menu-item`}>My Bookings</NavLink>
                 <NavLink to="/chatroom" className={({ isActive }) => `${isActive ? 'active' : ""} me-3 menu-item`}>Chatroom</NavLink>
                 <NavLink to="/profile" className={({ isActive }) => `${isActive ? 'active' : ""} me-3 menu-item`}>My Profile</NavLink>
               </Nav>

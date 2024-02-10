@@ -1,4 +1,4 @@
-import React, {} from 'react'
+import React, { } from 'react'
 import RideCard from '../../components/RideCard/RideCard'
 
 import { useSelector } from 'react-redux';
@@ -10,8 +10,8 @@ function FindRides() {
 
     const rides = useSelector(state => state.rides.rides);
 
-    if(rides === false){
-        return <Preloader/>
+    if (rides === false) {
+        return <Preloader />
     }
 
 
@@ -26,20 +26,24 @@ function FindRides() {
                     </div>
                 </div>
             </div>
-           <div className="container contact-page-form">
+            <div className="container contact-page-form">
                 <div className="pt-5 pb-5">
                     <div className="row">
                         {rides.map((ride) => {
-                            return (
-                                <div key={ride.id} className="col-lg-4 mb-5">
-                                    <RideCard ride={ride} editMode={false}/>
-                                </div>
-                            )
+                            if (ride.status === "active" && ride.isCompleted === false) {
+                                return (
+                                    <div key={ride.id} className="col-lg-4 mb-5">
+                                        <RideCard ride={ride} editMode={false} />
+                                    </div>
+                                )
+                            }else{
+                                return null;
+                            }
                         })}
                     </div>
                 </div>
             </div> :
-            
+
         </section>
     )
 }

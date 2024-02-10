@@ -68,7 +68,7 @@ function ShareRides() {
                     status,
                     driverAddress,
                     phoneNo: user.phoneNo,
-                    passangerId: null,
+                    passengerId: null,
                     isCompleted: false,
                     rating: null,
                     userReview: null

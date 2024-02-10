@@ -404,10 +404,6 @@ section.map-sec {
 }
 
 
-
-
-
-
 /* ******************** Sign In & Sign Up Page Styling *************************  */
 
 
@@ -431,11 +427,6 @@ section.map-sec {
   border-radius: 0;
   margin-bottom: 15px;
 }
-
-
-
-
-
 
 
 
@@ -467,6 +458,16 @@ section.map-sec {
 .ride-card img.card-img-top {
   object-fit: cover;
 }
+
+/* ******************************* Booking Card Styling **********************  */
+
+
+.container.booking-card {
+  padding: 15px 0px;
+  border-bottom: 2px solid #0148a9;
+  margin-bottom: 15px;
+}
+
 
  /* ***************************** Ride Info Page Styling ********************** */
 

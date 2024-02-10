@@ -12,12 +12,13 @@ import FindRides from './Screens/FindRides/FindRides';
 import { useDispatch, useSelector } from 'react-redux';
 import Profile from './Screens/Profile/Profile';
 import ShareRides from './Screens/ShareRides/ShareRides';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from './config/firebase';
 import { useEffect, useState } from 'react';
 import { loadRides } from './store/features/rides/ridesSlice';
 import RideInfo from './Screens/RideInfo/RideInfo';
 import Preloader from './components/Preloader/Preloader';
+import MyBookings from './Screens/MyBookings/MyBookings';
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
   const dispatch = useDispatch();
   
   useEffect(() => {
-    const q = query(collection(db, "rides"), where("status", "==", "active"), where("isCompleted", "==", false));
+    const q = query(collection(db, "rides"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const rides = [];
       querySnapshot.forEach((doc) => {
@@ -59,6 +60,7 @@ function App() {
         <Route path='/sharerides' element={<ShareRides />} />
         <Route path='/rideinfo/:id' element={<RideInfo />} />
         <Route path='/editride/:id' element={<ShareRides />} />
+        <Route path='/mybookings' element={<MyBookings />} />
 
         <Route path='*' element={<NotFound />} />
       </Route>
