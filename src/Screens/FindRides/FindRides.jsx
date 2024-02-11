@@ -1,14 +1,17 @@
-import React, { } from 'react'
+import React, { useState } from 'react'
 import RideCard from '../../components/RideCard/RideCard'
 
 import { useSelector } from 'react-redux';
 import Preloader from '../../components/Preloader/Preloader';
+import RatingModal from '../../components/RatingModal/RatingModal';
 
 function FindRides() {
 
 
-
     const rides = useSelector(state => state.rides.rides);
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+
 
     if (rides === false) {
         return <Preloader />
@@ -36,11 +39,15 @@ function FindRides() {
                                         <RideCard ride={ride} editMode={false} />
                                     </div>
                                 )
-                            }else{
+                            } else {
                                 return null;
                             }
                         })}
                     </div>
+                    <button className="btn btn-primary" onClick={handleShow}>
+                        Leave a Review
+                    </button>
+                    <RatingModal show={show} setShow = {setShow}/>
                 </div>
             </div> :
 

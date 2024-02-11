@@ -1,0 +1,14 @@
+.star {
+    font-size: 34px;
+    cursor: pointer;
+    color: gray;
+  }
+  
+  .selected {
+    color: #03409A; /* Change this to the color you want for selected stars */
+  }
+  
+  .rating-number {
+    margin-left: 10px;
+  }
+  

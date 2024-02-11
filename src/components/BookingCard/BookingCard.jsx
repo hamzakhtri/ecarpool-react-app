@@ -1,5 +1,5 @@
 import { doc, updateDoc } from 'firebase/firestore';
-import React from 'react'
+import React from 'react';
 import Swal from 'sweetalert2';
 import { db } from '../../config/firebase';
 
@@ -22,6 +22,9 @@ function BookingCard({ bookedRide }) {
                 status: "active"
             });
         }
+    }
+
+    const completeRide = ()=>{
 
     }
 
@@ -33,7 +36,7 @@ function BookingCard({ bookedRide }) {
                 <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
                 <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
                 <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
-                <div className="col-lg-2 col-sm-4"><button className='btn btn-sm btn-dark'>Complete Ride</button></div>
+                <div className="col-lg-2 col-sm-4"><button onClick={completeRide} className='btn btn-sm btn-dark'>Complete Ride</button></div>
             </div>
         </div>
     )
