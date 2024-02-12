@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
 import RideCard from '../../components/RideCard/RideCard'
 
 import { useSelector } from 'react-redux';
 import Preloader from '../../components/Preloader/Preloader';
-import RatingModal from '../../components/RatingModal/RatingModal';
 
 function FindRides() {
 

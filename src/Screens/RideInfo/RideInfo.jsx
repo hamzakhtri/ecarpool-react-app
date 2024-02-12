@@ -1,4 +1,4 @@
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { db } from '../../config/firebase';
@@ -6,12 +6,15 @@ import Preloader from '../../components/Preloader/Preloader';
 import { useSelector } from 'react-redux';
 import EditRideModal from '../../components/EditRideModal/EditRideModal';
 import Swal from 'sweetalert2';
+import avatar from "../../assets/img/user.png";
 
 function RideInfo() {
 
     const [rideInfo, setRideInfo] = useState({});
     const [modalShow, setModalShow] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [reviewLoading, setREviewLoading] = useState(false);
+    const [driverCompletedRides, setDriverCompletedRides] = useState([]);
     const user = useSelector(state => state.user.currentUser);
     const navigate = useNavigate();
 
@@ -40,6 +43,40 @@ function RideInfo() {
 
         return () => unsubscribe(); // Clean up the listener when the component unmounts
     }, [id, getRideInfo]);
+
+    // getting all driver completed rides to show driver rating to the user 
+
+
+    const getDriverReview = useCallback(async () => {
+        
+        setREviewLoading(true);
+
+        if (!rideInfo.userId) {
+            setREviewLoading(false);
+            // Handle the case where userId is undefined
+            return;
+        }
+
+        const q = query(collection(db, "rides"), where("isCompleted", "==", true), where("userId", "==", rideInfo.userId));
+
+        const querySnapshot = await getDocs(q);
+        const completedRides = [];
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            const { rating, userReview, from, to } = doc.data();
+            completedRides.push({ rating, userReview, from, to });
+        });
+
+        setDriverCompletedRides(completedRides);
+
+        setREviewLoading(false);
+
+    }, [rideInfo.userId]);
+
+
+    useEffect(() => {
+        getDriverReview();
+    }, [getDriverReview, rideInfo.userId])
 
 
 
@@ -104,6 +141,29 @@ function RideInfo() {
                     )}
 
                 </div>
+            </div>
+            <div className="row">
+                {driverCompletedRides.length > 0 ?
+                    <div className="col-lg-12 mt-5 pt-5">
+                        <h1 className=''>User Reviews</h1>
+                        {driverCompletedRides.map((review) => {
+                            return (
+                                <div className='d-flex my-5 align-items-center' style={{borderBottom: "1px solid black", paddingBottom: "15px"}}>
+                                    <div className="img me-3">
+                                        <img src={avatar} className='img-fluid' width="50px" alt="user" />
+                                    </div>
+                                    <div>
+                                        <p className='m-0 h3'>{'★'.repeat(review.rating)}</p>
+                                        <p className='m-0 h5 fw-medium'>{review.userReview}</p>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div> :
+                    <div className='col-lg-12 mt-5 pt-5'>
+                        <h1 className=''>User Reviews</h1>
+                        <h4 className='mt-5 text-secondary'>{reviewLoading ? "Loading..." : "Not Rated Yet"}</h4>
+                    </div>}
             </div>
         </div>
     )

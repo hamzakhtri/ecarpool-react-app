@@ -21,7 +21,7 @@ function MyBookings() {
 
         const myPassengers = [];
         rides.forEach((ride) => {
-            ride.userId === user.id && ride.passengerId && ride.status === "inactive" && myPassengers.push(ride) ;
+            ride.userId === user.id && ride.isCompleted === false && ride.status === "inactive" && myPassengers.push(ride) ;
         });
 
         setBookedPassenger(myPassengers);

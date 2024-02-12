@@ -3,10 +3,10 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import './RatingModal.css'; // Import CSS file for styling
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
+import Swal from 'sweetalert2';
 
 const RatingModal = ({ show, setShow, id }) => {
 
-  const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
   const [submitError, setSubmitError] = useState("");
@@ -24,15 +24,19 @@ const RatingModal = ({ show, setShow, id }) => {
   const completeRide = async () => {
 
     if (rating && review) {
-      setLoading(true);
       const docref = doc(db, "rides", id);
       await updateDoc(docref, {
         isCompleted: true,
         rating: rating,
         userReview: review
       });
-      setLoading(false);
-      setShow(false);
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Ride Completed",
+        showConfirmButton: false,
+        timer: 1500
+      })
     } else {
       setSubmitError("Rating and Review Required");
     }
@@ -80,7 +84,7 @@ const RatingModal = ({ show, setShow, id }) => {
             Close
           </Button>
           <Button variant="primary" onClick={completeRide}>
-            {loading ? "Completing..." : "Complete"}
+            Complete
           </Button>
         </Modal.Footer>
       </Modal>

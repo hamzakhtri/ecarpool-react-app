@@ -19,6 +19,7 @@ import { loadRides } from './store/features/rides/ridesSlice';
 import RideInfo from './Screens/RideInfo/RideInfo';
 import Preloader from './components/Preloader/Preloader';
 import MyBookings from './Screens/MyBookings/MyBookings';
+import Chatroom from './Screens/Chatroom/Chatroom';
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
         <Route path='/rideinfo/:id' element={<RideInfo />} />
         <Route path='/editride/:id' element={<ShareRides />} />
         <Route path='/mybookings' element={<MyBookings />} />
+        <Route path='/chatroom' element={<Chatroom />} />
 
         <Route path='*' element={<NotFound />} />
       </Route>

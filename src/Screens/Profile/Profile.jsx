@@ -5,7 +5,8 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCurrentUser } from '../../store/features/user/userSlice';
-import avatar from "../../assets/img/avatar.png"
+import avatar from "../../assets/img/user.png"
+import femaleAvatar from "../../assets/img/femaleAvatar.png"
 import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 
 
@@ -186,7 +187,7 @@ function Profile() {
                 <div className="d-flex justify-content-between align-items-center mt-4">
                   <div className="profile-info d-flex align-items-center">
                     <div>
-                      <img src={avatar} alt="avatar" width="120" className='img-fluid me-3' />
+                      <img src={newGender === "female"? femaleAvatar : avatar} alt="avatar" width="120" className='img-fluid me-3' />
                     </div>
                     <div>
                       <h3>{user && user.username}</h3>
