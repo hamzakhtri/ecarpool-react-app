@@ -14,14 +14,14 @@ function MyBookings() {
     useEffect(() => {
         const myRides = [];
         rides.forEach((ride) => {
-            ride.passengerId === user.id && ride.isCompleted === false && myRides.push(ride);
+            ride.passengerId === user.id && ride.isCompleted === false && ride.status === "inactive" && myRides.push(ride);
         });
 
         setBookedRides(myRides);
 
         const myPassengers = [];
         rides.forEach((ride) => {
-            ride.userId === user.id && ride.passengerId && myPassengers.push(ride);
+            ride.userId === user.id && ride.passengerId && ride.status === "inactive" && myPassengers.push(ride) ;
         });
 
         setBookedPassenger(myPassengers);
@@ -53,7 +53,7 @@ function MyBookings() {
                             bookedRides.map((ride) => {
                                 return (
                                     <div key={ride.id}>
-                                        <BookingCard bookedRide={ride}/>
+                                        <BookingCard bookedRide={ride} rideFor="passenger"/>
                                     </div>
                                 )
                             })
@@ -62,6 +62,18 @@ function MyBookings() {
                 </div>
                 <div>
                     <h2>Bookings As a Driver</h2>
+                    <div className="drivers-box p-4 border border-2 border-dark">
+                        
+                        {bookedPassenger.length > 0 ?
+                            bookedPassenger.map((ride) => {
+                                return (
+                                    <div key={ride.id}>
+                                        <BookingCard bookedRide={ride} rideFor="driver"/>
+                                    </div>
+                                )
+                            })
+                            : <h3 className='text-center my-4'>No Rides Please share Rides</h3>}
+                    </div>
                 </div>
             </div>
         </>

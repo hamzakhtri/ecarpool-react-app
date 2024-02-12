@@ -1,13 +1,15 @@
-import { doc, updateDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import React, { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { db } from '../../config/firebase';
 import RatingModal from '../RatingModal/RatingModal';
 
-function BookingCard({ bookedRide }) {
+function BookingCard({ bookedRide, rideFor }) {
 
-    
+
     const [show, setShow] = useState(false);
+    const [passengerInfo, setPassengerInfo] = useState({});
+    const [loading, setLoading] = useState(false);
     const handleShow = () => setShow(true);
 
 
@@ -26,26 +28,71 @@ function BookingCard({ bookedRide }) {
                 passengerId: '',
                 status: "active"
             });
-        }
+        } 
     }
 
 
+    // getting realtime passengerInfo to show detail of passenger to the driver
+
+    const getPassenger = useCallback(() => {
+        setLoading(true);
+
+        const docRef = doc(db, "users", bookedRide.passengerId);
+        const unsubscribe = onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                setPassengerInfo(docSnap.data());
+            } else {
+                console.log("No such document!");
+                // Optionally handle the case where the document doesn't exist
+            }
+            setLoading(false);
+        });
+
+        return ()=> unsubscribe(); // Return unsubscribe function to clean up the listener
+    }, [setPassengerInfo, bookedRide.passengerId]);
+
+    useEffect(() => {
+        const unsubscribe = getPassenger();
+
+        return () => unsubscribe(); // Clean up the listener when the component unmounts
+    }, [getPassenger, bookedRide.passengerId]);
 
 
 
-    return (
-        <div className="container booking-card">
-            <div className="row align-items-center">
-                <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
-                <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Driver: {bookedRide.driverName}</h6></div>
-                <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
-                <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
-                <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
-                <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div>
-                <RatingModal show={show} setShow = {setShow} id={bookedRide.id}/>
+
+    if (rideFor === "passenger") {
+        return (
+            <div className="container booking-card">
+                <div className="row align-items-center">
+                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
+                    <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Driver: {bookedRide.driverName}</h6></div>
+                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
+                    <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
+                    <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
+                    <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div>
+                    <RatingModal show={show} setShow={setShow} id={bookedRide.id} />
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+    if (rideFor === "driver") {
+        return (
+            <div className="container booking-card">
+                {loading ? <h3 className='text-center'>Loading...</h3>: <div className="row align-items-center">
+                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
+                    <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Passenger : {passengerInfo.username}</h6></div>
+                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
+                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>Phone : {passengerInfo.phoneNo}</h6></div>
+                    <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
+                    {/* <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div> */}
+                    {/* <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div> */}
+                    <RatingModal show={show} setShow={setShow} id={bookedRide.id} />
+                </div>}
+            </div>
+        )
+    }
+
+
 }
 
 export default BookingCard

@@ -18,6 +18,8 @@ const RatingModal = ({ show, setShow, id }) => {
   };
 
 
+  // this method complete ride in the dabase basically it will update the status of ride and add user 
+  // details
 
   const completeRide = async () => {
 

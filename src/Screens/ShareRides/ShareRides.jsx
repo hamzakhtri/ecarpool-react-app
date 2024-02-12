@@ -31,6 +31,10 @@ function ShareRides() {
     const [loading, setLoading] = useState(false);
     const fileInputRef = useRef(null);
 
+    // prevent user to select today date or select future date only 
+
+    const today = new Date().toISOString().split('T')[0];
+
 
     // if the url contain an idea it mean we have to update document which have same id of params 
 
@@ -94,6 +98,7 @@ function ShareRides() {
                 setTime("10:00");
                 setDriverAddress("");
                 setStatus("active");
+
 
 
             } catch (error) {
@@ -210,6 +215,7 @@ function ShareRides() {
                                 placeholder='Car Image'
                                 className='form-control'
                                 value={date}
+                                min={today}
                                 onChange={(e) => setDate(e.target.value)}
                             />
                         </div>

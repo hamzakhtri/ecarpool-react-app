@@ -179,7 +179,7 @@ function Profile() {
           </div>
         </div>
       </div>
-      <div className="container my-5 py-5">
+      <div className="container my-5">
 
 
               <div className="container mb-4 mt-3">
