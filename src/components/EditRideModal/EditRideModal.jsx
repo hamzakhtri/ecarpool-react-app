@@ -14,8 +14,6 @@ function EditRideModal(props) {
 
     // converting time in standard format 
 
-    console.log(ride.id);
-
     const rideTime = convertTo24HourFormat(ride.time)
 
     // new states which will be use to update new data 

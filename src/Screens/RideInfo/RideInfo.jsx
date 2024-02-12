@@ -63,8 +63,8 @@ function RideInfo() {
         const completedRides = [];
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            const { rating, userReview, from, to } = doc.data();
-            completedRides.push({ rating, userReview, from, to });
+            const { rating, userReview, from, to, documentId } = doc.data();
+            completedRides.push({ rating, userReview, from, to, documentId });
         });
 
         setDriverCompletedRides(completedRides);
@@ -148,7 +148,7 @@ function RideInfo() {
                         <h1 className=''>User Reviews</h1>
                         {driverCompletedRides.map((review) => {
                             return (
-                                <div className='d-flex my-5 align-items-center' style={{borderBottom: "1px solid black", paddingBottom: "15px"}}>
+                                <div key={review.documentId} className='d-flex my-5 align-items-center' style={{borderBottom: "1px solid black", paddingBottom: "15px"}}>
                                     <div className="img me-3">
                                         <img src={avatar} className='img-fluid' width="50px" alt="user" />
                                     </div>

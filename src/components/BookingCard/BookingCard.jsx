@@ -1,8 +1,10 @@
-import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDocs, onSnapshot, updateDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { db } from '../../config/firebase';
 import RatingModal from '../RatingModal/RatingModal';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function BookingCard({ bookedRide, rideFor }) {
 
@@ -10,6 +12,8 @@ function BookingCard({ bookedRide, rideFor }) {
     const [show, setShow] = useState(false);
     const [passengerInfo, setPassengerInfo] = useState({});
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const user = useSelector(state => state.user.currentUser);
     const handleShow = () => setShow(true);
 
 
@@ -28,7 +32,14 @@ function BookingCard({ bookedRide, rideFor }) {
                 passengerId: '',
                 status: "active"
             });
-        } 
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Chatroom Created",
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
     }
 
 
@@ -48,7 +59,7 @@ function BookingCard({ bookedRide, rideFor }) {
             setLoading(false);
         });
 
-        return ()=> unsubscribe(); // Return unsubscribe function to clean up the listener
+        return () => unsubscribe(); // Return unsubscribe function to clean up the listener
     }, [setPassengerInfo, bookedRide.passengerId]);
 
     useEffect(() => {
@@ -58,6 +69,42 @@ function BookingCard({ bookedRide, rideFor }) {
     }, [getPassenger, bookedRide.passengerId]);
 
 
+    // when user Click on message button it will create chat room of the user if the chatrrom is not available
+
+    const createChatroom = async () => {
+
+        // first getting all chatrooms and check if the both user avaible or not in chatroom 
+        // if they are not availbe so we will create chatroom for both
+
+        const querySnapshot = await getDocs(collection(db, "chatrooms"));
+        let isChatroomAvailble = false;
+        querySnapshot.forEach((doc) => {
+            let chatroom = doc.data();
+            if(chatroom.hasOwnProperty(user.id) && chatroom.hasOwnProperty(bookedRide.id)){
+                isChatroomAvailble = true;
+            }
+        });
+        if(!isChatroomAvailble){
+            await addDoc(collection(db, "chatrooms"), {
+                [user.id] : true,
+                [bookedRide.userId] : false,
+            });
+            await Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Chat Room Created",
+                showConfirmButton: false,
+                timer: 1000
+            });
+            navigate("/chatroom");
+
+
+        }else{
+            navigate("/chatroom");
+        }
+
+
+    }
 
 
     if (rideFor === "passenger") {
@@ -67,7 +114,7 @@ function BookingCard({ bookedRide, rideFor }) {
                     <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
                     <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Driver: {bookedRide.driverName}</h6></div>
                     <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
-                    <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
+                    <div className="col-lg-1 col-sm-4"><button onClick={createChatroom} className='btn btn-sm btn-dark'>Message</button></div>
                     <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
                     <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div>
                     <RatingModal show={show} setShow={setShow} id={bookedRide.id} />
@@ -78,12 +125,12 @@ function BookingCard({ bookedRide, rideFor }) {
     if (rideFor === "driver") {
         return (
             <div className="container booking-card">
-                {loading ? <h3 className='text-center'>Loading...</h3>: <div className="row align-items-center">
+                {loading ? <h3 className='text-center'>Loading...</h3> : <div className="row align-items-center">
                     <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
                     <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Passenger : {passengerInfo.username}</h6></div>
                     <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
                     <div className="col-lg-3 col-sm-4"><h6 className='m-0'>Phone : {passengerInfo.phoneNo}</h6></div>
-                    <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
+                    <div className="col-lg-1 col-sm-4"><button onClick={createChatroom} className='btn btn-sm btn-dark'>Message</button></div>
                     {/* <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div> */}
                     {/* <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div> */}
                     <RatingModal show={show} setShow={setShow} id={bookedRide.id} />

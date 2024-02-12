@@ -75,7 +75,8 @@ function ShareRides() {
                     passengerId: null,
                     isCompleted: false,
                     rating: null,
-                    userReview: null
+                    userReview: null,
+                    documentId : null,
                 });
 
                 await Swal.fire({

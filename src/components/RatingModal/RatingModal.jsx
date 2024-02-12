@@ -28,7 +28,8 @@ const RatingModal = ({ show, setShow, id }) => {
       await updateDoc(docref, {
         isCompleted: true,
         rating: rating,
-        userReview: review
+        userReview: review,
+        documentId : id,
       });
       await Swal.fire({
         position: "center",
