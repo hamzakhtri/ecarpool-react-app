@@ -1,9 +1,14 @@
 import { doc, updateDoc } from 'firebase/firestore';
-import React from 'react';
+import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { db } from '../../config/firebase';
+import RatingModal from '../RatingModal/RatingModal';
 
 function BookingCard({ bookedRide }) {
+
+    
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
 
 
     const cancelRide = async () => {
@@ -24,9 +29,9 @@ function BookingCard({ bookedRide }) {
         }
     }
 
-    const completeRide = ()=>{
 
-    }
+
+
 
     return (
         <div className="container booking-card">
@@ -36,7 +41,8 @@ function BookingCard({ bookedRide }) {
                 <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
                 <div className="col-lg-1 col-sm-4"><button className='btn btn-sm btn-dark'>Message</button></div>
                 <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
-                <div className="col-lg-2 col-sm-4"><button onClick={completeRide} className='btn btn-sm btn-dark'>Complete Ride</button></div>
+                <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div>
+                <RatingModal show={show} setShow = {setShow} id={bookedRide.id}/>
             </div>
         </div>
     )

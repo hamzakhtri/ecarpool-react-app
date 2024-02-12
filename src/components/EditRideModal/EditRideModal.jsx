@@ -8,6 +8,7 @@ import { db } from '../../config/firebase';
 
 function EditRideModal(props) {
 
+
     // de structuring props 
     const { ride, onHide } = props;
 

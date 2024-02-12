@@ -7,18 +7,17 @@ function MyBookings() {
     const [bookedRides, setBookedRides] = useState("");
     const [bookedPassenger, setBookedPassenger] = useState("");
 
+
     const rides = useSelector(state => state.rides.rides);
     const user = useSelector(state => state.user.currentUser);
 
     useEffect(() => {
         const myRides = [];
         rides.forEach((ride) => {
-            ride.passengerId === user.id && myRides.push(ride);
+            ride.passengerId === user.id && ride.isCompleted === false && myRides.push(ride);
         });
 
         setBookedRides(myRides);
-
-        console.log(myRides);
 
         const myPassengers = [];
         rides.forEach((ride) => {
@@ -28,6 +27,11 @@ function MyBookings() {
         setBookedPassenger(myPassengers);
 
     }, [rides, user.id])
+
+
+
+
+    
 
     return (
         <>

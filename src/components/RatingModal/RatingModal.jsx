@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './RatingModal.css'; // Import CSS file for styling
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
-const RatingModal = ({show, setShow}) => {
-  
+const RatingModal = ({ show, setShow, id }) => {
+
+  const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const [submitError, setSubmitError] = useState("");
 
   const handleClose = () => setShow(false);
 
@@ -13,20 +17,30 @@ const RatingModal = ({show, setShow}) => {
     setRating(value);
   };
 
-  const handleReviewChange = (event) => {
-    setReview(event.target.value);
-  };
 
-  const handleSubmit = () => {
-    console.log('Rating:', rating);
-    console.log('Review:', review);
-    setShow(false);
-    // You can perform further actions here, like sending the rating and review to the server
+
+  const completeRide = async () => {
+
+    if (rating && review) {
+      setLoading(true);
+      const docref = doc(db, "rides", id);
+      await updateDoc(docref, {
+        isCompleted: true,
+        rating: rating,
+        userReview: review
+      });
+      setLoading(false);
+      setShow(false);
+    } else {
+      setSubmitError("Rating and Review Required");
+    }
+
+
   };
 
   return (
     <>
-      
+
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -54,16 +68,17 @@ const RatingModal = ({show, setShow}) => {
               as="textarea"
               rows={3}
               value={review}
-              onChange={handleReviewChange}
+              onChange={(e) => setReview(e.target.value)}
             />
           </Form.Group>
+          <p className='text-danger'>{submitError && submitError}</p>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            Submit
+          <Button variant="primary" onClick={completeRide}>
+            {loading ? "Completing..." : "Complete"}
           </Button>
         </Modal.Footer>
       </Modal>

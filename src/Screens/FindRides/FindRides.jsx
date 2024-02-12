@@ -9,8 +9,7 @@ function FindRides() {
 
 
     const rides = useSelector(state => state.rides.rides);
-    const [show, setShow] = useState(false);
-    const handleShow = () => setShow(true);
+
 
 
     if (rides === false) {
@@ -44,10 +43,8 @@ function FindRides() {
                             }
                         })}
                     </div>
-                    <button className="btn btn-primary" onClick={handleShow}>
-                        Leave a Review
-                    </button>
-                    <RatingModal show={show} setShow = {setShow}/>
+                
+                    
                 </div>
             </div> :
 
