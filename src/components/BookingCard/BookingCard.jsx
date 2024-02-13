@@ -1,10 +1,12 @@
-import { addDoc, collection, doc, getDocs, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import React, { useCallback, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { db } from '../../config/firebase';
 import RatingModal from '../RatingModal/RatingModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentChatRoomId } from '../../store/features/chatroom/chatRoomSlice';
+
 
 function BookingCard({ bookedRide, rideFor }) {
 
@@ -15,6 +17,7 @@ function BookingCard({ bookedRide, rideFor }) {
     const navigate = useNavigate();
     const user = useSelector(state => state.user.currentUser);
     const handleShow = () => setShow(true);
+    const dispatch = useDispatch();
 
 
     const cancelRide = async () => {
@@ -80,21 +83,26 @@ function BookingCard({ bookedRide, rideFor }) {
         let isChatroomAvailble = false;
         querySnapshot.forEach((doc) => {
             let chatroom = doc.data();
-            if(Object.keys(chatroom).includes(user.id) && Object.keys(chatroom).includes(bookedRide.userId)){
+            if (Object.keys(chatroom).includes(user.id) && Object.keys(chatroom).includes(bookedRide.userId)) {
                 isChatroomAvailble = true;
             }
         });
-        if(!isChatroomAvailble){
-            if(rideFor === "driver"){
-                await addDoc(collection(db, "chatrooms"), {
-                    [user.id] : true,
-                    [bookedRide.passengerId] : false,
+        if (!isChatroomAvailble) {
+            if (rideFor === "driver") {
+                await setDoc(doc(db, "chatrooms", bookedRide.id), {
+                    [user.id]: true,
+                    [bookedRide.passengerId]: true,
+                    roomId: bookedRide.id,
                 });
-            }else{
-                await addDoc(collection(db, "chatrooms"), {
-                    [user.id] : true,
-                    [bookedRide.userId] : false,
+
+
+            } else {
+                await setDoc(doc(db, "chatrooms", bookedRide.id), {
+                    [user.id]: true,
+                    [bookedRide.userId]: true,
+                    roomId: bookedRide.id,
                 });
+
             }
             await Swal.fire({
                 position: "center",
@@ -106,10 +114,14 @@ function BookingCard({ bookedRide, rideFor }) {
             navigate("/chatroom");
 
 
-        }else{
+        } else {
             navigate("/chatroom");
         }
 
+
+        //   setting currentChatroom id to redux to start chating between them 
+
+        dispatch(setCurrentChatRoomId(bookedRide.id));
 
     }
 

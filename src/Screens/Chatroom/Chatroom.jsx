@@ -5,14 +5,13 @@ import {
     MDBCol,
     MDBCard,
     MDBCardBody,
-    MDBBtn,
     MDBTypography,
     MDBTextArea,
 } from "mdb-react-ui-kit";
 import ChatMessage from "../../components/ChatMessage/ChatMessage";
 import ChatMember from "../../components/ChatMember/ChatMember";
 import { db } from "../../config/firebase";
-import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { addDoc, collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useSelector } from "react-redux";
 
 
@@ -20,6 +19,12 @@ function Chatroom() {
 
     const [mychatMembers, setMyChatMembers] = useState([]);
     const user = useSelector(state => state.user.currentUser);
+    const [message, setMessage] = useState("");
+    const [sendLoading, setSendLoading] = useState(false);
+
+    // getting current active chatroom id for chating from redux 
+
+    const currentChatRoom = useSelector(state => state.chatroom.currentChatRoomId)
 
     // getting all my available chatroom 
 
@@ -29,7 +34,7 @@ function Chatroom() {
         querySnapshot.forEach((doc) => {
             let chatroom = doc.data();
             for (let key in chatroom) {
-                if (key !== user.id && Object.keys(chatroom).includes(user.id) && chatroom[user.id] === true) {
+                if (key !== user.id && Object.keys(chatroom).includes(user.id)) {
                     chatMembers.push(key);
                 }
             }
@@ -60,6 +65,19 @@ function Chatroom() {
         return () => unsubscribe();
     }, [getMyChatMember]);
 
+
+
+    const sendMessage = async () => {
+        setSendLoading(true);
+        await addDoc(collection(db, "chatrooms", currentChatRoom, "messages"), {
+            messageTime: Date.now(),
+            msg: message,
+            senderId : user.id
+        });
+        setMessage("");
+        setSendLoading(false);
+    }
+
     return (
         <div className="container py-5 my-5">
             <MDBContainer fluid className="py-5" >
@@ -88,11 +106,11 @@ function Chatroom() {
                         <MDBTypography listUnStyled>
                             <ChatMessage />
                             <li className="bg-white mb-3">
-                                <MDBTextArea label="Message" id="textAreaExample" rows={4} />
+                                <MDBTextArea value={message} onChange={(e) => setMessage(e.target.value)} label="Message" id="textAreaExample" rows={4} />
                             </li>
-                            <MDBBtn color="info" rounded className="float-end">
-                                Send
-                            </MDBBtn>
+                            <button disabled={message ? false : true} onClick={sendMessage} color="info" className="float-end btn btn-dark">
+                                {sendLoading ? "Send...." : "Send"}
+                            </button>
                         </MDBTypography>
                     </MDBCol>
                 </MDBRow>
