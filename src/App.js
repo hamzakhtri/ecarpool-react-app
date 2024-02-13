@@ -60,7 +60,6 @@ function App() {
         });
 
         dispatch(setCurrentChatRoomId(room));
-        console.log(room);
 
       });
 

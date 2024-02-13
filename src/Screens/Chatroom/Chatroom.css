@@ -56,12 +56,18 @@ ul.list-unstyled.messages-sec::-webkit-scrollbar-thumb:hover {
   }
 
   .bg-dark-lightblue{
-    background-color: #000000b4 !important;
+    color: white;
+    background: linear-gradient(#000000b4, #000000bd 50%, #000000bd 0, #000000d6);
+    border-radius: 9px;
+    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
   }
 
-  .bg-dark-blue{
-    background-color: #015DD5;
-  }
+  .bg-dark-blue {
+    color: white;
+    background: linear-gradient(#015fda, #0051bb 50%, #0252bb 0, #004AAD);
+    border-radius: 9px;
+    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+}
 
   .no-chat-heading{
     height: 100vh;

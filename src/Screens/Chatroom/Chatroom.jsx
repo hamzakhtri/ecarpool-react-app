@@ -86,7 +86,7 @@ function Chatroom() {
         });
     }
 
-    const getMessages = useCallback(() => {
+    const getMessages = useCallback( () => {
         if (currentChatRoom === null) {
             return
         }
@@ -99,6 +99,7 @@ function Chatroom() {
             allMessages.sort((a, b) => a.messageTime - b.messageTime);
             setMessages(allMessages);
         });
+
 
         // Return the unsubscribe function in case you want to stop listening to changes
         return unsubscribe;
@@ -130,7 +131,7 @@ function Chatroom() {
                                     {mychatMembers.map((member) => {
                                         return (
                                             <div key={member.id}>
-                                                <ChatMember member={member} />
+                                                <ChatMember member={member} setLoading={setLoading} />
                                             </div>
                                         )
                                     })}
