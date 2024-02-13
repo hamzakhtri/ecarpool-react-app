@@ -12,7 +12,9 @@ import ChatMessage from "../../components/ChatMessage/ChatMessage";
 import ChatMember from "../../components/ChatMember/ChatMember";
 import { db } from "../../config/firebase";
 import { addDoc, collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentChatRoomId } from "../../store/features/chatroom/chatRoomSlice";
+
 
 
 function Chatroom() {
@@ -21,6 +23,8 @@ function Chatroom() {
     const user = useSelector(state => state.user.currentUser);
     const [message, setMessage] = useState("");
     const [sendLoading, setSendLoading] = useState(false);
+    const [messages, setMessages] = useState([]);
+    const dispatch = useDispatch();
 
     // getting current active chatroom id for chating from redux 
 
@@ -41,6 +45,7 @@ function Chatroom() {
         });
 
         if (chatMembers.length === 0) {
+            dispatch(setCurrentChatRoomId(null));
             // Handle the case when there are no chat members
             return;
         }
@@ -54,7 +59,7 @@ function Chatroom() {
 
         setMyChatMembers(documents);
 
-    }, [user, setMyChatMembers]);
+    }, [user, setMyChatMembers, dispatch]);
 
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, "chatrooms"), () => {
@@ -72,11 +77,34 @@ function Chatroom() {
         await addDoc(collection(db, "chatrooms", currentChatRoom, "messages"), {
             messageTime: Date.now(),
             msg: message,
-            senderId : user.id
+            senderName: user.username,
+            senderId: user.id,
+
         });
         setMessage("");
         setSendLoading(false);
     }
+
+    const getMessages = useCallback(() => {
+        const messagesRef = collection(db, "chatrooms", currentChatRoom, "messages");
+        const unsubscribe = onSnapshot(messagesRef, (querySnapshot) => {
+            const allMessages = [];
+            querySnapshot.forEach((doc) => {
+                allMessages.push(doc.data());
+            });
+            allMessages.sort((a, b) => a.messageTime - b.messageTime);
+            setMessages(allMessages);
+        });
+    
+        // Return the unsubscribe function in case you want to stop listening to changes
+        return unsubscribe;
+    }, [currentChatRoom]);
+    
+    useEffect(() => {
+        const unsubscribe = getMessages();
+        return unsubscribe;
+    }, [currentChatRoom, getMessages]);
+    
 
     return (
         <div className="container py-5 my-5">
@@ -103,8 +131,12 @@ function Chatroom() {
                     </MDBCol>
 
                     <MDBCol md="6" lg="7" xl="8">
-                        <MDBTypography listUnStyled>
-                            <ChatMessage />
+                        <MDBTypography className="messages-sec" listUnStyled>
+                            {messages.length > 0 && messages.map((message)=>{
+                                return(
+                                    <ChatMessage  message={message} key={message.id}/>
+                                )
+                            })}
                             <li className="bg-white mb-3">
                                 <MDBTextArea value={message} onChange={(e) => setMessage(e.target.value)} label="Message" id="textAreaExample" rows={4} />
                             </li>

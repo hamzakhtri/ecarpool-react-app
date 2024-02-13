@@ -279,7 +279,7 @@ function ShareRides() {
 
 
                 <div className="my-ads pt-5 my-5">
-                    <h2 className='my-3'>My Live Ads</h2>
+                    <h2 className='my-3'>My Ads</h2>
                     <div className="row">
 
                         {userAds.length < 1 && <div className='col-lg-12'><h2 className='text-secondary text-center my-4'>Empty Rides</h2></div>}

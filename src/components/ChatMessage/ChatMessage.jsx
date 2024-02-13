@@ -1,9 +1,9 @@
 import { MDBCard, MDBCardBody, MDBCardHeader, MDBIcon } from 'mdb-react-ui-kit'
 import React from 'react'
 
-function ChatMessage() {
+function ChatMessage({message, key}) {
     return (
-        <li className="d-flex justify-content-between mb-4">
+        <li key={key} className="d-flex justify-content-between mb-4">
             <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
                 alt="avatar"
@@ -12,16 +12,14 @@ function ChatMessage() {
             />
             <MDBCard>
                 <MDBCardHeader className="d-flex justify-content-between p-3">
-                    <p className="fw-bold mb-0">Brad Pitt</p>
+                    <p className="fw-bold mb-0">{message.senderName}</p>
                     <p className="text-muted small mb-0">
                         <MDBIcon far icon="clock" /> 12 mins ago
                     </p>
                 </MDBCardHeader>
                 <MDBCardBody>
                     <p className="mb-0">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                        do eiusmod tempor incididunt ut labore et dolore magna
-                        aliqua.
+                        {message.msg}
                     </p>
                 </MDBCardBody>
             </MDBCard>
