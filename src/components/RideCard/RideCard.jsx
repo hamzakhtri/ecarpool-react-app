@@ -56,6 +56,7 @@ function RideCard({ ride, editMode }) {
                     <p className="p-0 mb-1 small">Number Of Seats : {ride.numberOfSeats}</p>
                     <p className="p-0 mb-1 small">Status : <b>{ride.status}</b></p>
                     <p className="p-0 mb-3 small">Address : <b>{ride.driverAddress}</b></p>
+                    {ride.passengerId && <h6 className="card-title small mb-4 text-success">Ride Booked, Check Booking Section</h6>}
                     <div className="d-flex justify-content-between">
                         <button onClick={() => setModalShow(true)} className="btn btn-success btn-sm">
                             Edit Info

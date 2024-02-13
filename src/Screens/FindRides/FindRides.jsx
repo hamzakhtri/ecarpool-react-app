@@ -30,7 +30,7 @@ function FindRides() {
                 <div className="pt-5 pb-5">
                     <div className="row">
                         {rides.map((ride) => {
-                            if (ride.status === "active" && ride.isCompleted === false) {
+                            if (ride.status === "active" && ride.isCompleted === false && !ride.passengerId) {
                                 return (
                                     <div key={ride.id} className="col-lg-4 mb-5">
                                         <RideCard ride={ride} editMode={false} />

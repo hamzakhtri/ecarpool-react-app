@@ -12,7 +12,7 @@ import {
 import ChatMessage from "../../components/ChatMessage/ChatMessage";
 import ChatMember from "../../components/ChatMember/ChatMember";
 import { db } from "../../config/firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useSelector } from "react-redux";
 
 
@@ -21,7 +21,7 @@ function Chatroom() {
     const [mychatMembers, setMyChatMembers] = useState([]);
     const user = useSelector(state => state.user.currentUser);
 
-    // getting all my avaiblae chatroom 
+    // getting all my available chatroom 
 
     const getMyChatMember = useCallback(async () => {
         const querySnapshot = await getDocs(collection(db, "chatrooms"));
@@ -29,12 +29,16 @@ function Chatroom() {
         querySnapshot.forEach((doc) => {
             let chatroom = doc.data();
             for (let key in chatroom) {
-                if (key !== user.id && chatroom.hasOwnProperty(key)) {
+                if (key !== user.id && Object.keys(chatroom).includes(user.id) && chatroom[user.id] === true) {
                     chatMembers.push(key);
                 }
             }
-
         });
+
+        if (chatMembers.length === 0) {
+            // Handle the case when there are no chat members
+            return;
+        }
 
         const snapShot = await getDocs(query(collection(db, "users"), where('id', 'in', chatMembers)));
         const documents = [];
@@ -45,11 +49,16 @@ function Chatroom() {
 
         setMyChatMembers(documents);
 
-    }, [user.id])
+    }, [user, setMyChatMembers]);
 
     useEffect(() => {
-        getMyChatMember();
-    }, [getMyChatMember])
+        const unsubscribe = onSnapshot(collection(db, "chatrooms"), () => {
+            getMyChatMember();
+        });
+
+        // Cleanup function
+        return () => unsubscribe();
+    }, [getMyChatMember]);
 
     return (
         <div className="container py-5 my-5">
@@ -63,8 +72,6 @@ function Chatroom() {
                         <MDBCard>
                             <MDBCardBody>
                                 <MDBTypography listUnStyled className="mb-0">
-
-
                                     {mychatMembers.map((member) => {
                                         return (
                                             <div key={member.id}>
@@ -72,9 +79,6 @@ function Chatroom() {
                                             </div>
                                         )
                                     })}
-
-
-
                                 </MDBTypography>
                             </MDBCardBody>
                         </MDBCard>
@@ -82,9 +86,7 @@ function Chatroom() {
 
                     <MDBCol md="6" lg="7" xl="8">
                         <MDBTypography listUnStyled>
-
                             <ChatMessage />
-
                             <li className="bg-white mb-3">
                                 <MDBTextArea label="Message" id="textAreaExample" rows={4} />
                             </li>
@@ -96,7 +98,7 @@ function Chatroom() {
                 </MDBRow>
             </MDBContainer>
         </div>
-    )
+    );
 }
 
-export default Chatroom
+export default Chatroom;

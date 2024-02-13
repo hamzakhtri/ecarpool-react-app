@@ -80,15 +80,22 @@ function BookingCard({ bookedRide, rideFor }) {
         let isChatroomAvailble = false;
         querySnapshot.forEach((doc) => {
             let chatroom = doc.data();
-            if(chatroom.hasOwnProperty(user.id) && chatroom.hasOwnProperty(bookedRide.id)){
+            if(Object.keys(chatroom).includes(user.id) && Object.keys(chatroom).includes(bookedRide.userId)){
                 isChatroomAvailble = true;
             }
         });
         if(!isChatroomAvailble){
-            await addDoc(collection(db, "chatrooms"), {
-                [user.id] : true,
-                [bookedRide.userId] : false,
-            });
+            if(rideFor === "driver"){
+                await addDoc(collection(db, "chatrooms"), {
+                    [user.id] : true,
+                    [bookedRide.passengerId] : false,
+                });
+            }else{
+                await addDoc(collection(db, "chatrooms"), {
+                    [user.id] : true,
+                    [bookedRide.userId] : false,
+                });
+            }
             await Swal.fire({
                 position: "center",
                 icon: "success",
