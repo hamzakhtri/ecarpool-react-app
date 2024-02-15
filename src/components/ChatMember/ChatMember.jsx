@@ -3,6 +3,7 @@ import React, { } from 'react'
 import { db } from '../../config/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChatRoomId } from '../../store/features/chatroom/chatRoomSlice';
+import maleAvatar from "../../assets/img/user.png";
 
 function ChatMember({ member, setLoading }) {
 
@@ -32,7 +33,7 @@ function ChatMember({ member, setLoading }) {
             <a href="#!" className="d-flex justify-content-between">
                 <div className="d-flex flex-row">
                     <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp"
+                        src={maleAvatar}
                         alt="avatar"
                         className="rounded-circle d-flex align-self-center me-3 shadow-1-strong"
                         width="60"

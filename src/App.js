@@ -51,7 +51,6 @@ function App() {
   useEffect(() => {
     if (user && Object.keys(user).length > 0) {
 
-
       const q = query(collection(db, "chatrooms"), where(`${user.id}`, "==", true));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         let room = [];
@@ -59,7 +58,7 @@ function App() {
           room = doc.id
         });
 
-        dispatch(setCurrentChatRoomId(room));
+        dispatch(setCurrentChatRoomId(room[0]));
 
       });
 

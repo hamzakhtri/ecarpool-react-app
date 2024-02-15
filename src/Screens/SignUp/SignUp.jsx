@@ -83,16 +83,21 @@ function SignUp() {
 
             } catch (error) {
                 setLoading(false);
-                console.log(error.message);
+                setLoading(false);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: error.message.split(":")[1],
+                });
             }
 
-        }else{
+        } else {
             setLoading(false);
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "All Fields Required",
-              });
+            });
         }
 
     }

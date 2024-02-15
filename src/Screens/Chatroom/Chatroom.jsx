@@ -13,6 +13,8 @@ import { db } from "../../config/firebase";
 import { addDoc, collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentChatRoomId } from "../../store/features/chatroom/chatRoomSlice";
+import messageSound from "../../assets/sounds/smsSound.mp3"
+
 import "./Chatroom.css"
 
 
@@ -84,26 +86,34 @@ function Chatroom() {
             senderName: user.username,
             senderId: user.id,
         });
+
+
+        if (user.username !== message.senderName) {
+            const audio = new Audio(messageSound);
+            audio.play();
+        }
+        
     }
 
-    const getMessages = useCallback( () => {
-        if (currentChatRoom === null) {
-            return
-        }
-        const messagesRef = collection(db, "chatrooms", currentChatRoom, "messages");
-        const unsubscribe = onSnapshot(messagesRef, (querySnapshot) => {
-            const allMessages = [];
-            querySnapshot.forEach((doc) => {
-                allMessages.push(doc.data());
-            });
-            allMessages.sort((a, b) => a.messageTime - b.messageTime);
-            setMessages(allMessages);
+    const getMessages = useCallback(() => {
+    if (!currentChatRoom) {
+        // If currentChatRoom is null or undefined, return early
+        return;
+    }
+    const messagesRef = collection(db, "chatrooms", currentChatRoom, "messages");
+    const unsubscribe = onSnapshot(messagesRef, (querySnapshot) => {
+        const allMessages = [];
+        querySnapshot.forEach((doc) => {
+            allMessages.push(doc.data());
         });
+        allMessages.sort((a, b) => a.messageTime - b.messageTime);
+        setMessages(allMessages);
+    });
 
+    // Return the unsubscribe function in case you want to stop listening to changes
+    return unsubscribe;
+}, [currentChatRoom]);
 
-        // Return the unsubscribe function in case you want to stop listening to changes
-        return unsubscribe;
-    }, [currentChatRoom]);
 
     useEffect(() => {
         const unsubscribe = getMessages();
