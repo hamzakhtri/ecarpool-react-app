@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     currentChatRoomId : "",
+    frontUser : ""
 }
 
 export const chatRoomSlice = createSlice({
@@ -10,9 +11,12 @@ export const chatRoomSlice = createSlice({
     reducers : ({
         setCurrentChatRoomId : (state, action)=>{
             state.currentChatRoomId = action.payload;
+        },
+        setFrontUser : (state, action) =>{
+            state.frontUser = action.payload;
         }
     })
 })
 
-export const {setCurrentChatRoomId} = chatRoomSlice.actions;
+export const {setCurrentChatRoomId, setFrontUser} = chatRoomSlice.actions;
 export default chatRoomSlice.reducer; 

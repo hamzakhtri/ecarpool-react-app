@@ -1,16 +1,19 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import React, { } from 'react'
+import React, { useEffect } from 'react'
 import { db } from '../../config/firebase';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentChatRoomId } from '../../store/features/chatroom/chatRoomSlice';
+import { setCurrentChatRoomId, setFrontUser } from '../../store/features/chatroom/chatRoomSlice';
 import maleAvatar from "../../assets/img/user.png";
+import "./ChatMember.css"
 
 function ChatMember({ member, setLoading }) {
 
 
 
     const user = useSelector(state => state.user.currentUser);
+    const frontUser = useSelector(state => state.chatroom.frontUser);
     const dispatch = useDispatch();
+    console.log(frontUser === member.username);
 
     const setMemberInCurrentRoom = async () => {
 
@@ -23,13 +26,18 @@ function ChatMember({ member, setLoading }) {
             roomId = doc.id;
         });
         dispatch(setCurrentChatRoomId(roomId));
+        dispatch(setFrontUser(member.username));
         setTimeout(() => {
             setLoading(false);
         }, 800);
     }
 
+    useEffect(()=>{
+        dispatch(setFrontUser(member.username));
+    }, [dispatch, member])
+
     return (
-        <li className="p-2 border-bottom" onClick={setMemberInCurrentRoom}>
+        <li className={`p-2 border-bottom ${member.username === frontUser ? "active-chat-tab" : "" }`} onClick={setMemberInCurrentRoom}>
             <a href="#!" className="d-flex justify-content-between">
                 <div className="d-flex flex-row">
                     <img

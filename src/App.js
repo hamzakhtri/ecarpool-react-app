@@ -53,12 +53,12 @@ function App() {
 
       const q = query(collection(db, "chatrooms"), where(`${user.id}`, "==", true));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        let room = [];
+        let room;
         querySnapshot.forEach((doc) => {
           room = doc.id
         });
 
-        dispatch(setCurrentChatRoomId(room[0]));
+        dispatch(setCurrentChatRoomId(room));
 
       });
 

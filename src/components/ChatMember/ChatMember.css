@@ -1,0 +1,7 @@
+.active-chat-tab{
+    background-color: #073788;
+}
+
+.active-chat-tab p{
+    color: white !important;
+}

@@ -13,7 +13,7 @@ import { db } from "../../config/firebase";
 import { addDoc, collection, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentChatRoomId } from "../../store/features/chatroom/chatRoomSlice";
-import messageSound from "../../assets/sounds/smsSound.mp3"
+import avatar from "../../assets/img/user.png"
 
 import "./Chatroom.css"
 
@@ -27,6 +27,7 @@ function Chatroom() {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
+    const frontUser = useSelector(state => state.chatroom.frontUser)
 
     // getting current active chatroom id for chating from redux 
 
@@ -57,7 +58,7 @@ function Chatroom() {
         const documents = [];
 
         snapShot.forEach((doc) => {
-            documents.push(doc.data());
+            documents.unshift(doc.data());
         });
 
         setMyChatMembers(documents);
@@ -87,32 +88,26 @@ function Chatroom() {
             senderId: user.id,
         });
 
-
-        if (user.username !== message.senderName) {
-            const audio = new Audio(messageSound);
-            audio.play();
-        }
-        
     }
 
     const getMessages = useCallback(() => {
-    if (!currentChatRoom) {
-        // If currentChatRoom is null or undefined, return early
-        return;
-    }
-    const messagesRef = collection(db, "chatrooms", currentChatRoom, "messages");
-    const unsubscribe = onSnapshot(messagesRef, (querySnapshot) => {
-        const allMessages = [];
-        querySnapshot.forEach((doc) => {
-            allMessages.push(doc.data());
+        if (!currentChatRoom) {
+            // If currentChatRoom is null or undefined, return early
+            return;
+        }
+        const messagesRef = collection(db, "chatrooms", currentChatRoom, "messages");
+        const unsubscribe = onSnapshot(messagesRef, (querySnapshot) => {
+            const allMessages = [];
+            querySnapshot.forEach((doc) => {
+                allMessages.push(doc.data());
+            });
+            allMessages.sort((a, b) => a.messageTime - b.messageTime);
+            setMessages(allMessages);
         });
-        allMessages.sort((a, b) => a.messageTime - b.messageTime);
-        setMessages(allMessages);
-    });
 
-    // Return the unsubscribe function in case you want to stop listening to changes
-    return unsubscribe;
-}, [currentChatRoom]);
+        // Return the unsubscribe function in case you want to stop listening to changes
+        return unsubscribe;
+    }, [currentChatRoom]);
 
 
     useEffect(() => {
@@ -151,7 +146,12 @@ function Chatroom() {
                     </MDBCol>
 
                     <MDBCol md="6" lg="7" xl="8">
+                        <div className="chat-header d-flex justify-content-between align-items-center">
+                            <img src={avatar} alt="user" width={55} />
+                            <h3 className="m-0">{frontUser}</h3>
+                        </div>
                         <div className="messages-section">
+
                             <MDBTypography className="messages-sec" listUnStyled ref={(element) => element && (element.scrollTop = element.scrollHeight)}>
                                 {messages.length > 0 && messages.map((message) => {
                                     return (

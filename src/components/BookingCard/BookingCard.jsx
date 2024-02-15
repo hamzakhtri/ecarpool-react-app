@@ -79,11 +79,12 @@ function BookingCard({ bookedRide, rideFor }) {
         // first getting all chatrooms and check if the both user avaible or not in chatroom 
         // if they are not availbe so we will create chatroom for both
 
+
         const querySnapshot = await getDocs(collection(db, "chatrooms"));
         let isChatroomAvailble = false;
         querySnapshot.forEach((doc) => {
             let chatroom = doc.data();
-            if (Object.keys(chatroom).includes(user.id) && Object.keys(chatroom).includes(bookedRide.userId)) {
+            if (Object.keys(chatroom).includes(user.id) && Object.keys(chatroom).includes(rideFor === "driver" ? bookedRide.passengerId : bookedRide.userId)) {
                 isChatroomAvailble = true;
             }
         });
@@ -115,7 +116,7 @@ function BookingCard({ bookedRide, rideFor }) {
 
 
         } else {
-            navigate("/chatroom");
+         navigate("/chatroom");   
         }
 
 
