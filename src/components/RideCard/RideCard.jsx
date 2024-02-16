@@ -5,6 +5,7 @@ import { db, storage } from '../../config/firebase';
 import Swal from 'sweetalert2';
 import EditRideModal from '../EditRideModal/EditRideModal';
 import { deleteObject, ref } from 'firebase/storage';
+import "./RideCard.css"
 
 function RideCard({ ride, editMode }) {
 
@@ -45,7 +46,7 @@ function RideCard({ ride, editMode }) {
     if (editMode) {
 
         return (
-            <div className="card mx-2 h-100" >
+            <div className="card mx-2 h-100 ride-card" >
                 <img src={ride.imageUrl} width={200} height={270} className="card-img-top" alt="..." />
                 <div className="card-body">
                     <h6 className="card-title">{ride.from + " - " + ride.to}</h6>
@@ -76,7 +77,7 @@ function RideCard({ ride, editMode }) {
 
     } else {
         return (
-            <div className="card mx-2 h-100" >
+            <div className="card mx-2 h-100 ride-card" >
                 <img src={ride.imageUrl} width={250} height={270} className="card-img-top" alt="..." />
                 <div className="card-body">
                     <h5 className="card-title">{ride.from + " - " + ride.to}</h5>

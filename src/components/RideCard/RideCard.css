@@ -1,0 +1,15 @@
+.ride-card .btn{
+    color: white;
+    background: linear-gradient(#015fda, #0057c9 50%, #0252bb 0, #004AAD);
+    border-radius: 9px;
+    box-shadow: 3px 5px 6px rgba(0, 0, 0, 0.219);
+    border: none;
+    width: 100%;
+    margin: 20px 20px 
+}
+
+ 
+.ride-card .btn:hover{
+    background: linear-gradient(#004AAD, #0252bb 50%, #0057c9 0, #015fda);
+
+}

@@ -133,6 +133,7 @@ function Chatroom() {
                         <MDBCard>
                             <MDBCardBody>
                                 <MDBTypography listUnStyled className="mb-0">
+                                    {loading && mychatMembers.length === 0 && "Loading..."}
                                     {mychatMembers.map((member) => {
                                         return (
                                             <div key={member.id}>
@@ -148,7 +149,7 @@ function Chatroom() {
                     <MDBCol md="6" lg="7" xl="8">
                         <div className="chat-header d-flex justify-content-between align-items-center">
                             <img src={avatar} alt="user" width={55} />
-                            <h3 className="m-0">{frontUser}</h3>
+                            <h3 className="m-0">{loading ? "Loading..." : frontUser}</h3>
                         </div>
                         <div className="messages-section">
 

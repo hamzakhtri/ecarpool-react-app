@@ -8,6 +8,7 @@
 
 body {
   padding-right: 0 !important;
+  overflow-y: scroll !important;
 }
 
 a {
@@ -456,9 +457,9 @@ section.map-sec {
 }
 
 /* *********************** Ride Card STyling ******************* */
-.ride-card img.card-img-top {
+/* .ride-card img.card-img-top {
   object-fit: cover;
-}
+} */
 
 /* ******************************* Booking Card Styling **********************  */
 
@@ -526,7 +527,12 @@ section.map-sec {
 
 @media screen and (max-width: 1366px) {}
 
-@media screen and (max-width: 1280px) {}
+@media screen and (max-width: 1280px) {
+  nav.top-navbar .menu-item {
+    font-size: 16px;
+    padding: 10px 15px !important;
+}
+}
 
 @media screen and (max-width: 1024px) {
   section.hero-section {
@@ -551,6 +557,7 @@ section.map-sec {
   section.about-sec h5 {
     font-size: 22px;
   }
+
 }
 
 @media screen and (max-width: 991px) {
