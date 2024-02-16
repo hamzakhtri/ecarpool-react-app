@@ -18,9 +18,9 @@ function About() {
 
             <div className="about-content">
                 <div className="container">
-                    <div className="row g-5 align-items-center">
+                    <div className="row g-lg-5 align-items-center">
                         <div className="col-lg-6">
-                            <img src={aboutImage} className='img-fluid' alt="cab" />
+                            <img src={aboutImage} className='img-fluid w-100' alt="cab" />
                         </div>
                         <div className="col-lg-6 pe-5">
                             <h2 className='h1 mb-4'>Who Are We?</h2>
