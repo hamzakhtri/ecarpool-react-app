@@ -7,9 +7,9 @@ function AboutSec() {
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-lg-6">
-                        <div className="about-content">
+                        <div className="pb-5">
                             <h2>About E-Carpool</h2>
-                            <div className="d-flex align-items-center abt-txt">
+                            <div className="d-flex  abt-txt">
                                 <div>
                                     <div className="d-flex justify-content-center">
                                         <div className="abt-icon">
@@ -25,7 +25,7 @@ function AboutSec() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="d-flex align-items-center abt-txt">
+                            <div className="d-flex  abt-txt">
                                 <div>
                                     <div className="d-flex justify-content-center">
                                         <div className="abt-icon">
@@ -41,7 +41,7 @@ function AboutSec() {
                                     </p>
                                 </div>
                             </div>
-                            <div className="d-flex align-items-center abt-txt">
+                            <div className="d-flex  abt-txt">
                                 <div>
                                     <div className="d-flex justify-content-center">
                                         <div className="abt-icon">

@@ -1,5 +1,5 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { db } from '../../config/firebase';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChatRoomId, setFrontUser } from '../../store/features/chatroom/chatRoomSlice';

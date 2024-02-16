@@ -12,7 +12,7 @@ import FindRides from './Screens/FindRides/FindRides';
 import { useDispatch, useSelector } from 'react-redux';
 import Profile from './Screens/Profile/Profile';
 import ShareRides from './Screens/ShareRides/ShareRides';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from './config/firebase';
 import { useEffect, useState } from 'react';
 import { loadRides } from './store/features/rides/ridesSlice';
@@ -20,7 +20,6 @@ import RideInfo from './Screens/RideInfo/RideInfo';
 import Preloader from './components/Preloader/Preloader';
 import MyBookings from './Screens/MyBookings/MyBookings';
 import Chatroom from './Screens/Chatroom/Chatroom';
-import { setCurrentChatRoomId } from './store/features/chatroom/chatRoomSlice';
 
 
 function App() {
@@ -48,23 +47,23 @@ function App() {
   }, [dispatch])
 
 
-  useEffect(() => {
-    if (user && Object.keys(user).length > 0) {
+  // useEffect(() => {
+  //   if (user && Object.keys(user).length > 0) {
 
-      const q = query(collection(db, "chatrooms"), where(`${user.id}`, "==", true));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        let room;
-        querySnapshot.forEach((doc) => {
-          room = doc.id
-        });
+  //     const q = query(collection(db, "chatrooms"), where(`${user.id}`, "==", true));
+  //     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //       let room;
+  //       querySnapshot.forEach((doc) => {
+  //         room = doc.id
+  //       });
 
-        // dispatch(setCurrentChatRoomId(room));  
+  //       // dispatch(setCurrentChatRoomId(room));  
 
-      });
+  //     });
 
-      return () => unsubscribe();
-    }
-  }, [user, dispatch])
+  //     return () => unsubscribe();
+  //   }
+  // }, [user, dispatch])
 
 
   if (loadingData) {

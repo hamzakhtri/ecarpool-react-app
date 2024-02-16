@@ -23,7 +23,7 @@ function Hero() {
             </section>
             <section className="hero-info text-center">
                 <div className="container">
-                    <div className="row gx-5">
+                    <div className="row">
                         <div className="col-lg-4">
                             <div className="card w-100 h-100 p-3">
                                 <div className="card-body">
