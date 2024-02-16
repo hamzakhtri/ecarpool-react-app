@@ -138,6 +138,7 @@ function ShareRides() {
                 rides.push({ ...doc.data(), id: doc.id });
             });
             dispatch(addUserAds(rides));
+            console.log(rides);
         });
 
         return () => unsubscribe();

@@ -77,7 +77,7 @@ div#offcanvasNavbar-expand-lg {
 
 section.hero-section {
   padding: 12% 0px 15% 0px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.webp");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -383,7 +383,7 @@ section.map-sec {
 
 .inner-hero {
   padding: 160px 0px 80px 0px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/hero-bg.webp");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -413,7 +413,7 @@ section.map-sec {
 }
 
 .bg-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/auth-bg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/auth-bg.webp");
   background-size: cover;
   background-position: center;
 }

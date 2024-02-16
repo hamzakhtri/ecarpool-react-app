@@ -8,6 +8,7 @@ import { addCurrentUser } from '../../store/features/user/userSlice';
 import avatar from "../../assets/img/user.png"
 import femaleAvatar from "../../assets/img/femaleAvatar.png"
 import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { setCurrentChatRoomId, setFrontUser } from '../../store/features/chatroom/chatRoomSlice';
 
 
 function Profile() {
@@ -27,6 +28,8 @@ function Profile() {
   const logout = async () => {
     await signOut(auth);
     dispatch(addCurrentUser(null));
+    dispatch(setCurrentChatRoomId(""));
+    dispatch(setFrontUser(""));
     await Swal.fire({
       position: "center",
       icon: "success",

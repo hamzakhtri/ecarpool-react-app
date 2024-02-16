@@ -58,7 +58,7 @@ function App() {
           room = doc.id
         });
 
-        dispatch(setCurrentChatRoomId(room));
+        // dispatch(setCurrentChatRoomId(room));  
 
       });
 

@@ -5,7 +5,7 @@ import { db } from '../../config/firebase';
 import RatingModal from '../RatingModal/RatingModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setCurrentChatRoomId } from '../../store/features/chatroom/chatRoomSlice';
+import { setCurrentChatRoomId, setFrontUser } from '../../store/features/chatroom/chatRoomSlice';
 
 
 function BookingCard({ bookedRide, rideFor }) {
@@ -116,14 +116,27 @@ function BookingCard({ bookedRide, rideFor }) {
 
 
         } else {
-         navigate("/chatroom");   
+            navigate("/chatroom");
         }
 
 
         //   setting currentChatroom id to redux to start chating between them 
 
         dispatch(setCurrentChatRoomId(bookedRide.id));
+        setChatUser();
 
+    }
+
+
+    // set Front user for chat 
+
+
+    const setChatUser = () => {
+        if (rideFor === "passenger") {
+            dispatch(setFrontUser(bookedRide.driverName));
+        } else {
+            dispatch(setFrontUser(passengerInfo.username));
+        }
     }
 
 
