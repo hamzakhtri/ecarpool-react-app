@@ -568,6 +568,14 @@ section.map-sec {
   .about-content h2 {
     margin-top: 40px;
   }
+  .share-rides-page .container .row {
+    margin: 0 !important;
+}
+
+
+.share-rides-page .container .row .col-lg-4 .input-field {
+    margin-bottom: 25px;
+}
 }
 
 @media screen and (max-width: 768px) {}

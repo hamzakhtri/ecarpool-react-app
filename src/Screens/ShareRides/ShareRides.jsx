@@ -76,7 +76,7 @@ function ShareRides() {
                     isCompleted: false,
                     rating: null,
                     userReview: null,
-                    documentId : null,
+                    documentId: null,
                 });
 
                 await Swal.fire({
@@ -201,6 +201,19 @@ function ShareRides() {
                 <div className="row mb-4 mt-4">
                     <div className="col-lg-4">
                         <div className="input-field">
+
+                            <input
+                                type="number"
+                                placeholder='Number Of Seats'
+                                className='form-control'
+                                value={numberOfSeats}
+                                onChange={(e) => setNumberOfSeats(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="input-field">
+
                             <input
                                 type="number"
                                 placeholder='Rent'
@@ -214,22 +227,12 @@ function ShareRides() {
                         <div className="input-field">
                             <input
                                 type="date"
-                                placeholder='Car Image'
                                 className='form-control'
                                 value={date}
                                 min={today}
                                 onChange={(e) => setDate(e.target.value)}
                             />
-                        </div>
-                    </div>
-                    <div className="col-lg-4">
-                        <div className="input-field">
-                            <input
-                                type="time"
-                                className='form-control'
-                                value={time}
-                                onChange={(e) => setTime(e.target.value)}
-                            />
+
                         </div>
                     </div>
                 </div>
@@ -237,11 +240,10 @@ function ShareRides() {
                     <div className="col-lg-4">
                         <div className="input-field">
                             <input
-                                type="number"
-                                placeholder='Number Of Seats'
+                                type="time"
                                 className='form-control'
-                                value={numberOfSeats}
-                                onChange={(e) => setNumberOfSeats(e.target.value)}
+                                value={time}
+                                onChange={(e) => setTime(e.target.value)}
                             />
                         </div>
                     </div>
@@ -270,9 +272,13 @@ function ShareRides() {
                         </div>
                     </div>
                 </div>
-                <div className="input-field w-100">
-                    <input ref={fileInputRef} type="file" className='form-control' onChange={(e) => setCarImage(e.target.files[0])} name="uploadfile" id="img" />
-                    <label className='d-block h4 mt-4'>Upload Car Image</label>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="input-field w-100">
+                            <input ref={fileInputRef} type="file" className='form-control' onChange={(e) => setCarImage(e.target.files[0])} name="uploadfile" id="img" />
+                            <label className='d-block h4 mt-4'>Upload Car Image</label>
+                        </div>
+                    </div>
                 </div>
                 <div className='text-center'>
                     <button onClick={createRide} className='theme-btn m-0 mt-4' style={{ width: "180px" }}>{loading ? "Loading..." : "Create Ride"}</button>
@@ -287,7 +293,7 @@ function ShareRides() {
                         {userAds.map((ride) => {
                             return (
                                 <div key={ride.id} className="col-lg-4 mb-5">
-                                    {ride.isCompleted === false &&  <RideCard ride={ride} editMode={true} />}
+                                    {ride.isCompleted === false && <RideCard ride={ride} editMode={true} />}
                                 </div>
                             )
                         })}
