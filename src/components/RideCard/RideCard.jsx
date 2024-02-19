@@ -68,7 +68,7 @@ function RideCard({ ride, editMode }) {
                             ride={ride}
                         />
                         <button onClick={deleteRide} className="btn btn-danger btn-sm">
-                            delete
+                            Delete
                         </button>
                     </div>
                 </div>

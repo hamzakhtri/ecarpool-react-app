@@ -1,0 +1,14 @@
+.ride-search-sec input.form-control {
+    color: black;
+    border-radius: 0;
+    border: 2px solid #0146a5;
+}
+
+.ride-search-sec input.form-control:focus {
+    box-shadow: none;
+}
+
+.ride-search-sec h3 {
+    color: #0246a4;
+    font-weight: bold;
+}

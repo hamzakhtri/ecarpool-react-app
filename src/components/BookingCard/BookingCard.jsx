@@ -38,7 +38,7 @@ function BookingCard({ bookedRide, rideFor }) {
             Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Chatroom Created",
+                title: "Ride Canceled",
                 showConfirmButton: false,
                 timer: 1000
             });
