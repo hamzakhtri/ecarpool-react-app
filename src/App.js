@@ -78,7 +78,6 @@ function App() {
         <Route path='' element={user && user !== null ? <FindRides /> : <Home />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
-        <Route path='/forgotpassword' element={<ForgotPassword />} />
         {user && user !== null && (
           <>
             <Route path='/profile' element={<Profile />} />
@@ -95,6 +94,10 @@ function App() {
 
       <Route path='/signin' element={user ? <Navigate to="/" /> : <SignIn />} />
       <Route path='/signup' element={user ? <Navigate to="/" /> : <SignUp />} />
+      <Route path='/forgotpassword' element={<ForgotPassword />} />
+      <Route path='*' element={<NotFound />} />
+
+
     </Routes>
   );
 }

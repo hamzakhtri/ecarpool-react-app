@@ -90,7 +90,7 @@ function BookingCard({ bookedRide, rideFor }) {
         });
         if (!isChatroomAvailble) {
             if (rideFor === "driver") {
-                await setDoc(doc(db, "chatrooms", bookedRide.id), {
+                await setDoc(doc(db, "chatrooms", bookedRide.userId + bookedRide.passengerId), {
                     [user.id]: true,
                     [bookedRide.passengerId]: true,
                     roomId: bookedRide.id,
@@ -98,7 +98,7 @@ function BookingCard({ bookedRide, rideFor }) {
 
 
             } else {
-                await setDoc(doc(db, "chatrooms", bookedRide.id), {
+                await setDoc(doc(db, "chatrooms", bookedRide.userId + bookedRide.passengerId), {
                     [user.id]: true,
                     [bookedRide.userId]: true,
                     roomId: bookedRide.id,
@@ -122,7 +122,7 @@ function BookingCard({ bookedRide, rideFor }) {
 
         //   setting currentChatroom id to redux to start chating between them 
 
-        dispatch(setCurrentChatRoomId(bookedRide.id));
+        dispatch(setCurrentChatRoomId(bookedRide.userId + bookedRide.passengerId));
         setChatUser();
 
     }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function MapSec() {
   return (
@@ -11,7 +12,7 @@ function MapSec() {
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam nemo rem perspiciatis voluptatum unde nisi placeat a. Sequi eius repudiandae ab excepturi laboriosam at aliquam fugit consequatur! Distinctio, porro qui.
                         Aut nam ea minima pariatur in aspernatur ex excepturi assumenda fugit nemo accusantium ut inventore sunt nisi, magnam veritatis commodi nesciunt alias accusamus minus illo. Saepe ex illo aperiam iure.
                     </p>
-                    <button className="theme-btn">Create Account</button>
+                    <button className="theme-btn text-white"><Link to="/signup" className='text-white'>Create Account</Link></button>
                 </div>
             </div>
         </div>

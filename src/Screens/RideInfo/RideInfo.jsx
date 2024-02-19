@@ -142,7 +142,7 @@ function RideInfo() {
 
                 </div>
             </div>
-            <div className="row">
+            <div className="row px-3">
                 {driverCompletedRides.length > 0 ?
                     <div className="col-lg-12 mt-5 pt-5">
                         <h1 className=''>User Reviews</h1>

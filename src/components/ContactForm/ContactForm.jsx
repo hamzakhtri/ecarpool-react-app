@@ -15,20 +15,34 @@ function ContactForm({ title }) {
 
     const submitForm = async () => {
         setLoading(true);
-        await addDoc(collection(db, "contactforms"), {
-            name, email, message            
-        });
-        await Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Message Sent",
-            showConfirmButton: false,
-            timer: 1000
-        });
-        setLoading(false);
-        setName("");
-        setEmail("");
-        setMessage("");
+        if (name && email && message) {
+
+            await addDoc(collection(db, "contactforms"), {
+                name, email, message
+            });
+            await Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Message Sent",
+                showConfirmButton: false,
+                timer: 1000
+            });
+            setLoading(false);
+            setName("");
+            setEmail("");
+            setMessage("");
+
+        } else {
+            await Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "All Fields Required",
+                showConfirmButton: false,
+                timer: 1000
+            });
+            setLoading(false);
+        }
+
     }
 
     return (
