@@ -27,16 +27,16 @@ function Profile() {
 
   const logout = async () => {
     await signOut(auth);
-    dispatch(addCurrentUser(null));
-    dispatch(setCurrentChatRoomId(""));
-    dispatch(setFrontUser(""));
     await Swal.fire({
       position: "center",
       icon: "success",
       title: "Sign Out Successfully",
       showConfirmButton: false,
       timer: 1500
-    })
+    });
+    dispatch(addCurrentUser(null));
+    dispatch(setCurrentChatRoomId(""));
+    dispatch(setFrontUser(""));
     navigate("/");
 
   }
@@ -142,9 +142,31 @@ function Profile() {
 
       setLoading(true);
 
+      // get user password for security to delte his/her account
+
+      let authPassword;
+      await Swal.fire({
+        title: 'Reauthenticate',
+        input: 'password',
+        inputPlaceholder: 'Enter your password',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
+        showLoaderOnConfirm: true,
+        preConfirm: (password) => {
+          // You can save the entered password in a variable here
+          // For demonstration, let's just log it to the console
+          authPassword = password;
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      });
+
       // User confirmed, proceed with account deletion
 
-      const credentials = EmailAuthProvider.credential(user.email, user.password);
+      const credentials = EmailAuthProvider.credential(user.email, authPassword);
       try {
         await reauthenticateWithCredential(auth.currentUser, credentials);
 
@@ -159,7 +181,11 @@ function Profile() {
         await deleteUser(auth.currentUser);
         logout();
       } catch (error) {
-        console.error("Error deleting account:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message.split(":")[1],
+        });
         // Handle account deletion error (e.g., display error message to the user)
       }
     } else {
@@ -186,112 +212,112 @@ function Profile() {
       <div className="container my-5">
 
 
-              <div className="container mb-4 mt-3">
-                <div className="d-flex justify-content-between align-items-center mt-4">
-                  <div className="profile-info d-flex align-items-center">
-                    <div>
-                      <img src={newGender === "female"? femaleAvatar : avatar} alt="avatar" width="120" className='img-fluid me-3' />
-                    </div>
-                    <div>
-                      <h3>{user && user.username}</h3>
-                      <p className="m-0 p-0">{user && user.email}</p>
-                    </div>
-                  </div>
-                  <div>
-                    <button onClick={logout} className='theme-btn'>Logout</button>
-                  </div>
-                </div>
-                <div className="profile-form-sec">
-                  <div className="row mb-4 mt-4">
-                    <div className="col-lg-4">
-                      <div className="input-field">
-                        <input
-                          type="text"
-                          placeholder='Enter Name'
-                          className='form-control'
-                          value={newName}
-                          onChange={(e) => setNewName(e.target.value)}
-                          disabled={readOnly}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="input-field">
-                        <input
-                          type="email"
-                          placeholder='Enter Email'
-                          className='form-control'
-                          value={newEmail}
-                          onChange={(e) => setNewEmail(e.target.value)}
-                          disabled
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="input-field">
-                        <input type="password"
-                          placeholder='Enter Password'
-                          className='form-control'
-                          value="**********"
-                          disabled
-                        />
-                      </div>
-                    </div>
-
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <div className="input-field">
-                        <input
-                          type="number"
-                          placeholder='Enter Phone No'
-                          className='form-control'
-                          value={newPhoneNo}
-                          onChange={(e) => setNewPhoneNo(e.target.value)}
-                          disabled={readOnly}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="input-field">
-                        <input
-                          type="text"
-                          placeholder='Enter Address'
-                          className='form-control'
-                          value={newAddress}
-                          onChange={(e) => setNewAddress(e.target.value)}
-                          disabled={readOnly}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div className="input-field">
-                        <select
-                          className='form-control'
-                          name="gender"
-                          id="gender"
-                          value={newGender}
-                          onChange={(e) => setNewGender(e.target.value)}
-                          disabled={readOnly}
-                        >
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      {readOnly ?
-                        <button onClick={handleEdit} className='btn btn-dark my-4 fs-5 px-4'>Edit</button> :
-                        <button onClick={updateProfile} className='btn btn-success my-4 fs-5 px-4'>Update</button>}
-                    </div>
-                    <div>
-                      <button onClick={deleteAccount} className='btn btn-danger my-4 fs-5 px-4'>{loading ? "Deleting..." : "Delete Account"}</button>
-                    </div>
-                  </div>
+        <div className="container mb-4 mt-3">
+          <div className="d-flex justify-content-between align-items-center mt-4 profile-top-sec">
+            <div className="profile-info d-flex align-items-center">
+              <div>
+                <img src={newGender === "female" ? femaleAvatar : avatar} alt="avatar" width="120" className='img-fluid me-3' />
+              </div>
+              <div>
+                <h3>{user && user.username}</h3>
+                <p className="m-0 p-0">{user && user.email}</p>
+              </div>
+            </div>
+            <div>
+              <button onClick={logout} className='theme-btn'>Logout</button>
+            </div>
+          </div>
+          <div className="profile-form-sec">
+            <div className="row mb-4 mt-4">
+              <div className="col-lg-4">
+                <div className="input-field">
+                  <input
+                    type="text"
+                    placeholder='Enter Name'
+                    className='form-control'
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    disabled={readOnly}
+                  />
                 </div>
               </div>
+              <div className="col-lg-4">
+                <div className="input-field">
+                  <input
+                    type="email"
+                    placeholder='Enter Email'
+                    className='form-control'
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    disabled
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="input-field">
+                  <input type="password"
+                    placeholder='Enter Password'
+                    className='form-control'
+                    value="**********"
+                    disabled
+                  />
+                </div>
+              </div>
+
+            </div>
+            <div className="row">
+              <div className="col-lg-4">
+                <div className="input-field">
+                  <input
+                    type="number"
+                    placeholder='Enter Phone No'
+                    className='form-control'
+                    value={newPhoneNo}
+                    onChange={(e) => setNewPhoneNo(e.target.value)}
+                    disabled={readOnly}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="input-field">
+                  <input
+                    type="text"
+                    placeholder='Enter Address'
+                    className='form-control'
+                    value={newAddress}
+                    onChange={(e) => setNewAddress(e.target.value)}
+                    disabled={readOnly}
+                  />
+                </div>
+              </div>
+              <div className="col-lg-4">
+                <div className="input-field">
+                  <select
+                    className='form-control'
+                    name="gender"
+                    id="gender"
+                    value={newGender}
+                    onChange={(e) => setNewGender(e.target.value)}
+                    disabled={readOnly}
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                {readOnly ?
+                  <button onClick={handleEdit} className='btn btn-dark my-4 fs-5 px-4'>Edit</button> :
+                  <button onClick={updateProfile} className='btn btn-success my-4 fs-5 px-4'>Update</button>}
+              </div>
+              <div>
+                <button onClick={deleteAccount} className='btn btn-danger my-4 fs-5 px-4'>{loading ? "Deleting..." : "Delete Account"}</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
       </div>

@@ -110,12 +110,12 @@ function RideInfo() {
     return (
         <div className="container ride-info-page">
             <div className="row align-items-center">
-                <div className="col-lg-5">
+                <div className="col-lg-6 p-0">
                     <div className="img-sec">
                         <img src={rideInfo.imageUrl} className='img-fluid w-100' alt="" />
                     </div>
                 </div>
-                <div className="col-lg-7">
+                <div className="col-lg-4 ms-lg-4 ride-info-col">
                     <h2 className='fw-bold ms-3 my-3'><span className='fw-medium'>{rideInfo.from + " - " + rideInfo.to}</span></h2>
                     <h5 className='ms-3 my-2 fw-light'>Driver Name : <span className='fw-medium'>{rideInfo.driverName}</span></h5>
                     <h5 className='ms-3 my-2 fw-light'>Car Name : <span className='fw-medium'>{rideInfo.carName}</span></h5>

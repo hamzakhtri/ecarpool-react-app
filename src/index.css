@@ -531,7 +531,7 @@ section.map-sec {
   nav.top-navbar .menu-item {
     font-size: 16px;
     padding: 10px 15px !important;
-}
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -558,6 +558,16 @@ section.map-sec {
     font-size: 22px;
   }
 
+  .ride-info-col h2 {
+    font-size: 25px;
+    margin-bottom: 10px !important;
+}
+
+.ride-info-col h5 {
+    font-size: 17px;
+    margin-bottom: 0px !important;
+}
+
 }
 
 @media screen and (max-width: 991px) {
@@ -568,14 +578,23 @@ section.map-sec {
   .about-content h2 {
     margin-top: 40px;
   }
+
   .share-rides-page .container .row {
     margin: 0 !important;
-}
+  }
 
 
-.share-rides-page .container .row .col-lg-4 .input-field {
+  .share-rides-page .container .row .col-lg-4 .input-field {
     margin-bottom: 25px;
-}
+  }
+
+  .profile-form-sec .row {
+    margin: 0 !important;
+  }
+
+  .profile-form-sec .row .input-field {
+    margin-top: 26px;
+  }
 }
 
 @media screen and (max-width: 768px) {}
@@ -584,6 +603,23 @@ section.map-sec {
   section.hero-section {
     padding: 23% 0px 25% 0px;
   }
+  .container.ride-info-page {
+    overflow-x: hidden;
+}
+  .profile-top-sec {
+    flex-direction: column;
+}
+.profile-info h3 {
+  font-size: 20px;
+}
+
+.profile-info p {
+  font-size: 13px;
+}
+
+.profile-info img {
+  width: 70px;
+}
 }
 
 @media screen and (max-width: 480px) {
@@ -617,13 +653,19 @@ section.map-sec {
     font-size: 48px !important;
   }
 
-  .about-content{
+  .about-content {
     padding: 40px 20px;
   }
 
-  .about-content .col-lg-6{
+  .about-content .col-lg-6 {
     padding: 0 !important;
   }
+  .container.ride-info-page {
+    padding: 70px 0 100px 0 !important;
+}
+.profile-form-sec button {
+  font-size: 15px !important;
+}
 
 }
 
