@@ -620,6 +620,9 @@ section.map-sec {
 .profile-info img {
   width: 70px;
 }
+.container.booking-card .row .col {
+  margin-bottom: 22px !important;
+}
 }
 
 @media screen and (max-width: 480px) {
@@ -665,6 +668,14 @@ section.map-sec {
 }
 .profile-form-sec button {
   font-size: 15px !important;
+}
+
+.container.booking-card .row{
+  flex-direction: column;
+}
+
+.container.booking-card .row .col{
+  margin-bottom: 12px !important;
 }
 
 }

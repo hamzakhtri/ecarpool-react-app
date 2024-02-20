@@ -144,12 +144,12 @@ function BookingCard({ bookedRide, rideFor }) {
         return (
             <div className="container booking-card">
                 <div className="row align-items-center">
-                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
-                    <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Driver: {bookedRide.driverName}</h6></div>
-                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
-                    <div className="col-lg-1 col-sm-4"><button onClick={createChatroom} className='btn btn-sm btn-dark'>Message</button></div>
-                    <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
-                    <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div>
+                    <div className="col-lg-3 col-sm-4 col"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
+                    <div className="col-lg-2 col-sm-4 col"><h6 className='m-0'>Driver: {bookedRide.driverName}</h6></div>
+                    <div className="col-lg-3 col-sm-4 col"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
+                    <div className="col-lg-1 col-sm-4 col"><button onClick={createChatroom} className='btn btn-sm btn-dark'>Message</button></div>
+                    <div className="col-lg-1 col-sm-4 col"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div>
+                    <div className="col-lg-2 col-sm-4 col"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div>
                     <RatingModal show={show} setShow={setShow} id={bookedRide.id} />
                 </div>
             </div>
@@ -159,11 +159,11 @@ function BookingCard({ bookedRide, rideFor }) {
         return (
             <div className="container booking-card">
                 {loading ? <h3 className='text-center'>Loading...</h3> : <div className="row align-items-center">
-                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
-                    <div className="col-lg-2 col-sm-4"><h6 className='m-0'>Passenger : {passengerInfo.username}</h6></div>
-                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
-                    <div className="col-lg-3 col-sm-4"><h6 className='m-0'>Phone : {passengerInfo.phoneNo}</h6></div>
-                    <div className="col-lg-1 col-sm-4"><button onClick={createChatroom} className='btn btn-sm btn-dark'>Message</button></div>
+                    <div className="col-lg-3 col-sm-4 col"><h6 className='m-0'>{bookedRide.from + " - " + bookedRide.to}</h6></div>
+                    <div className="col-lg-2 col-sm-4 col"><h6 className='m-0'>Passenger : {passengerInfo.username}</h6></div>
+                    <div className="col-lg-3 col-sm-4 col"><h6 className='m-0'>{bookedRide.date + "/" + bookedRide.time}</h6></div>
+                    <div className="col-lg-3 col-sm-4 col"><h6 className='m-0'>Phone : {passengerInfo.phoneNo}</h6></div>
+                    <div className="col-lg-1 col-sm-4 col"><button onClick={createChatroom} className='btn btn-sm btn-dark'>Message</button></div>
                     {/* <div className="col-lg-1 col-sm-4"><button onClick={cancelRide} className='btn btn-sm btn-dark'>Cancel</button></div> */}
                     {/* <div className="col-lg-2 col-sm-4"><button onClick={handleShow} className='btn btn-sm btn-dark'>Complete Ride</button></div> */}
                     <RatingModal show={show} setShow={setShow} id={bookedRide.id} />
